@@ -15,11 +15,18 @@ RVC всегда представляется как `RVC/<версия>` (на�
   "conditions": [
     { "headerName": "user-agent", "operator": "REGEX", "value": "^RVC", "caseSensitive": false }
   ],
-  "responseType": "XRAY_JSON"
+  "responseType": "XRAY_JSON",
+  "responseModifications": {
+    "additionalExtendedClientsRegex": ["^RVC/"]
+  }
 }
 ```
 
-Или допишите `^RVC` в регулярку существующего правила.
+Или допишите `^RVC` в регулярку существующего правила — и туда же `responseModifications`.
+
+::: tip Описание серверов
+Remnawave отдаёт «Описание сервера» хостов (`serverDescription`) только «расширенным клиентам». Happ и INCY зашиты в панель, а RVC нужно перечислить в `additionalExtendedClientsRegex`, как в примере выше. Без этого под именем локации будет только протокол (`VLESS`).
+:::
 
 С `XRAY_JSON` клиент получает шаблон целиком: автовыбор (балансировщик `leastLoad`), `burstObservatory`, вашу маршрутизацию и DNS.
 

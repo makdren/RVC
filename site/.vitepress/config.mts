@@ -62,6 +62,8 @@ export default defineConfig({
             { text: 'Устройство приложения', link: '/dev/architecture' },
             { text: 'Безопасность', link: '/dev/security' },
             { text: 'Ограничения', link: '/dev/limitations' },
+            { text: 'Сравнение с INCY и Happ', link: '/dev/comparison' },
+            { text: 'Статистика', link: '/dev/stats' },
           ],
         },
       ],

@@ -1,0 +1,43 @@
+name: Статистика
+
+# Раз в сутки сохраняет счётчики скачиваний GitHub Releases в ветку stats (файл stats.json),
+# откуда их читает страница «Статистика» на сайте документации.
+on:
+  schedule:
+    - cron: '23 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: stats
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Ветка stats
+        run: |
+          git fetch origin stats || true
+          mkdir -p "$RUNNER_TEMP/stats"
+          if git show-ref --quiet refs/remotes/origin/stats; then
+            git worktree add "$RUNNER_TEMP/stats" origin/stats
+            git -C "$RUNNER_TEMP/stats" switch -c stats
+          else
+            git worktree add --orphan -b stats "$RUNNER_TEMP/stats"
+          fi
+      - name: Снимок счётчиков
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 .github/scripts/stats_snapshot.py "$RUNNER_TEMP/stats/stats.json"
+      - name: Сохранить
+        working-directory: ${{ runner.temp }}/stats
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add stats.json
+          git diff --cached --quiet || git commit -m "Статистика за $(date -u +%F)"
+          git push origin stats
