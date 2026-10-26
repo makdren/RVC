@@ -1,0 +1,117 @@
+/* Цвета приложения: акцент #7C7CFF (тёмная тема) / #5B57F0 (светлая), фон #07070B. */
+:root {
+  --vp-c-brand-1: #5b57f0;
+  --vp-c-brand-2: #6d6af4;
+  --vp-c-brand-3: #5b57f0;
+  --vp-c-brand-soft: rgba(91, 87, 240, 0.14);
+  --vp-c-bg: #f3f4f9;
+  --vp-c-bg-alt: #ebecf4;
+  --vp-c-bg-elv: #ffffff;
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: linear-gradient(120deg, #5b57f0 10%, #9b8cff 90%);
+  --vp-home-hero-image-background-image: radial-gradient(circle, rgba(124, 124, 255, 0.35) 0%, rgba(124, 124, 255, 0) 65%);
+  --vp-home-hero-image-filter: blur(56px);
+  --vp-button-brand-bg: #5b57f0;
+  --vp-button-brand-hover-bg: #6d6af4;
+  --vp-button-brand-active-bg: #4f4be0;
+}
+
+.dark {
+  --vp-c-brand-1: #9b9bff;
+  --vp-c-brand-2: #8c8cff;
+  --vp-c-brand-3: #7c7cff;
+  --vp-c-brand-soft: rgba(124, 124, 255, 0.16);
+  --vp-c-bg: #07070b;
+  --vp-c-bg-alt: #0c0c14;
+  --vp-c-bg-elv: #12121c;
+  --vp-c-bg-soft: #12121c;
+  --vp-c-divider: rgba(255, 255, 255, 0.08);
+  --vp-home-hero-name-background: linear-gradient(120deg, #9b9bff 10%, #c3b8ff 90%);
+  --vp-button-brand-bg: #7c7cff;
+  --vp-button-brand-text: #0b0b14;
+  --vp-button-brand-hover-bg: #9b9bff;
+  --vp-button-brand-hover-text: #0b0b14;
+  --vp-button-brand-active-bg: #6c6cf0;
+}
+
+/* Стеклянные карточки возможностей, как в приложении. */
+.VPFeature {
+  border: 1px solid var(--vp-c-divider);
+  background: color-mix(in srgb, var(--vp-c-bg-elv) 70%, transparent) !important;
+  backdrop-filter: blur(12px);
+  border-radius: 20px !important;
+}
+
+.VPHero .image-src {
+  border-radius: 28%;
+  max-width: 200px;
+  max-height: 200px;
+}
+
+/* Галерея скриншотов на главной и в разделах. */
+.shots {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 8px 2px 16px;
+  scroll-snap-type: x mandatory;
+}
+
+.shots figure {
+  flex: 0 0 auto;
+  margin: 0;
+  scroll-snap-align: start;
+  text-align: center;
+}
+
+.shots img {
+  width: 200px;
+  border-radius: 22px;
+  border: 1px solid var(--vp-c-divider);
+}
+
+.shots figcaption {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--vp-c-text-2);
+}
+
+.home-section {
+  max-width: 1152px;
+  margin: 0 auto;
+  padding: 48px 24px 0;
+}
+
+.home-section h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  border: 0;
+}
+
+.home-section p {
+  color: var(--vp-c-text-2);
+  max-width: 720px;
+}
+
+/* Схема устройства приложения. */
+.arch {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  margin: 16px 0;
+}
+
+.arch div {
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: var(--vp-c-bg-soft);
+  font-size: 14px;
+}
+
+.arch b {
+  display: block;
+  color: var(--vp-c-brand-1);
+  margin-bottom: 4px;
+}

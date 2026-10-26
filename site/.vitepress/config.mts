@@ -1,0 +1,108 @@
+import { defineConfig } from 'vitepress'
+
+const repo = 'https://github.com/makdren/RVC'
+
+export default defineConfig({
+  lang: 'ru-RU',
+  title: 'RVC',
+  description: 'VPN-клиент для Android: подписки Remnawave, Happ и INCY, Xray-core, AmneziaWG.',
+  base: '/RVC/',
+  cleanUrls: true,
+  lastUpdated: true,
+  appearance: 'dark',
+  head: [
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/RVC/logo.svg' }],
+    ['meta', { name: 'theme-color', content: '#07070B' }],
+    ['meta', { property: 'og:title', content: 'RVC — документация' }],
+    ['meta', { property: 'og:description', content: 'VPN-клиент для Android, совместимый с Remnawave, Happ и INCY.' }],
+  ],
+  themeConfig: {
+    logo: '/logo.svg',
+    siteTitle: 'RVC',
+    nav: [
+      { text: 'Пользователям', link: '/guide/', activeMatch: '/guide/' },
+      { text: 'Провайдерам', link: '/provider/', activeMatch: '/provider/' },
+      { text: 'Разработчикам', link: '/dev/build', activeMatch: '/dev/' },
+      { text: 'Скачать', link: `${repo}/releases/latest` },
+    ],
+    sidebar: {
+      '/guide/': [
+        {
+          text: 'Пользователям',
+          items: [
+            { text: 'Начало работы', link: '/guide/' },
+            { text: 'Локации и пинг', link: '/guide/locations' },
+            { text: 'Маршрутизация и приложения', link: '/guide/routing' },
+            { text: 'Белые списки', link: '/guide/whitelist' },
+            { text: 'Плитка, виджет, ярлыки', link: '/guide/quick-access' },
+            { text: 'Обновление приложения', link: '/guide/updates' },
+            { text: 'Частые вопросы', link: '/guide/faq' },
+          ],
+        },
+      ],
+      '/provider/': [
+        {
+          text: 'Провайдерам',
+          items: [
+            { text: 'Настройка Remnawave', link: '/provider/' },
+            { text: 'Запрос подписки и HWID', link: '/provider/subscription' },
+            { text: 'Заголовки ответа', link: '/provider/headers' },
+            { text: 'Ссылки серверов', link: '/provider/links' },
+            { text: 'Профили маршрутизации', link: '/provider/routing' },
+            { text: 'Deep links', link: '/provider/deeplinks' },
+            { text: 'Push-уведомления', link: '/provider/notifications' },
+          ],
+        },
+      ],
+      '/dev/': [
+        {
+          text: 'Разработчикам',
+          items: [
+            { text: 'Сборка и выпуск', link: '/dev/build' },
+            { text: 'Устройство приложения', link: '/dev/architecture' },
+            { text: 'Безопасность', link: '/dev/security' },
+            { text: 'Ограничения', link: '/dev/limitations' },
+          ],
+        },
+      ],
+    },
+    socialLinks: [{ icon: 'github', link: repo }],
+    editLink: {
+      pattern: `${repo}/edit/main/site/:path`,
+      text: 'Предложить правку',
+    },
+    outline: { level: [2, 3], label: 'На этой странице' },
+    docFooter: { prev: 'Назад', next: 'Дальше' },
+    lastUpdated: { text: 'Обновлено' },
+    darkModeSwitchLabel: 'Тема',
+    lightModeSwitchTitle: 'Светлая тема',
+    darkModeSwitchTitle: 'Тёмная тема',
+    sidebarMenuLabel: 'Меню',
+    returnToTopLabel: 'Наверх',
+    langMenuLabel: 'Язык',
+    notFound: {
+      title: 'Страница не найдена',
+      quote: 'Такой страницы нет — возможно, её переименовали.',
+      linkText: 'На главную',
+    },
+    footer: {
+      message: 'GPL-3.0 · основан на Фарватере · Xray-core (MPL-2.0), amneziawg-go (MIT)',
+      copyright: 'RVC',
+    },
+    search: {
+      provider: 'local',
+      options: {
+        translations: {
+          button: { buttonText: 'Поиск', buttonAriaLabel: 'Поиск' },
+          modal: {
+            displayDetails: 'Подробнее',
+            resetButtonTitle: 'Сбросить',
+            backButtonTitle: 'Закрыть',
+            noResultsText: 'Ничего не найдено',
+            footer: { selectText: 'выбрать', navigateText: 'перейти', closeText: 'закрыть' },
+          },
+        },
+      },
+    },
+  },
+})
