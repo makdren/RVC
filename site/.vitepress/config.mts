@@ -23,6 +23,7 @@ export default defineConfig({
       { text: 'Пользователям', link: '/guide/', activeMatch: '/guide/' },
       { text: 'Провайдерам', link: '/provider/', activeMatch: '/provider/' },
       { text: 'Разработчикам', link: '/dev/build', activeMatch: '/dev/' },
+      { text: 'Изменения', link: '/changelog', activeMatch: '/changelog' },
       { text: 'Скачать', link: `${repo}/releases/latest` },
     ],
     sidebar: {

@@ -28,7 +28,7 @@
 
 ## Скачать
 
-Откройте [последний релиз](https://github.com/makdren/RVC/releases/latest) и выберите файл:
+Откройте [последний релиз](https://github.com/makdren/RVC/releases/latest) и выберите файл ([что нового](https://makdren.github.io/RVC/changelog)):
 
 | Файл | Для каких телефонов |
 | :-- | :-- |
