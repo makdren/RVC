@@ -23,7 +23,7 @@
 
 1. баннер окончания подписки — за 3 дня до `expire` и после него, если есть `expiry-banner-text` или `sub-expire: 1`;
 2. баннер провайдера `banner-*`;
-3. инфо-блок Happ `sub-info-*`.
+3. инфо-блок `sub-info-*`.
 
 Если текст баннера совпадает с объявлением, он показывается один раз. Невидимые символы (`⠀`, пробелы нулевой ширины), которыми панели заполняют «пустой» текст, считаются пустотой: от такого баннера остаётся только кнопка.
 
@@ -36,7 +36,7 @@
 | `banner-bg-color`, `banner-button-color` | Цвета `#RRGGBB` (или `#RRGGBBAA`) |
 | `expiry-banner-text`, `expiry-banner-button-text`, `expiry-banner-button-url` (`expiry-banner-url`) | Баннер окончания подписки |
 | `expiry-banner-bg-color`, `expiry-banner-button-color`, `expiry-banner-text-color`, `expiry-banner-button-text-color` | Его цвета |
-| `sub-info-text`, `sub-info-button-text`, `sub-info-button-link`, `sub-info-color` (`red`/`green`/`blue`) | Инфо-блок в формате Happ. Значение `0` отключает |
+| `sub-info-text`, `sub-info-button-text`, `sub-info-button-link`, `sub-info-color` (`red`/`green`/`blue`) | Инфо-блок. Значение `0` отключает |
 | `sub-expire`, `notification-subs-expire` | Включить баннер и уведомления об окончании подписки |
 
 Ссылки кнопок открываются только со схемами `https`, `http`, `tg`, `mailto`: остальные (например, `intent://`) игнорируются ради безопасности.
@@ -81,7 +81,7 @@
 | `exclude-routes`, `exclude-routes-set` | Подсети мимо туннеля (Android 13+) |
 | `xray-tun-mtu` | MTU туннеля (576–65535) |
 | `hide-vpn-icon` | Попытка скрыть значок VPN (Android 13+, работает не везде) |
-| `providerid` (`provider-id`) | Сохраняется, на сервисы Happ ничего не отправляется |
+| `providerid` (`provider-id`) | Сохраняется; на сторонние серверы ничего не отправляется |
 
 ## Ответы Remnawave о лимите устройств
 

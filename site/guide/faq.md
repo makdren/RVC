@@ -10,7 +10,7 @@
 
 ## «Автовыбор» — обычный сервер, а не балансировщик
 
-Провайдер отдаёт RVC подписку в формате base64, а не XRAY_JSON. Попросите провайдера добавить в Remnawave правило `user-agent` CONTAINS `RVC` → `XRAY_JSON` — см. [Настройка Remnawave](/provider/#response-rules).
+Провайдер отдаёт RVC подписку в формате base64, а не XRAY_JSON. Попросите провайдера добавить в Remnawave правило Response Rules для `RVC` с ответом `XRAY_JSON` — см. [Настройка Remnawave](/provider/#response-rules).
 
 ## «Достигнут лимит устройств»
 

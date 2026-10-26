@@ -1,15 +1,15 @@
 # Профили маршрутизации
 
-RVC использует **формат профилей Happ и INCY** (тот же JSON, что генерирует [routing.happ.su](https://routing.happ.su)), поэтому профили, которые провайдер уже отдаёт для этих клиентов, работают без изменений.
+RVC поддерживает **профили маршрутизации Happ и INCY**: тот же JSON, что собирает конструктор [routing.happ.su](https://routing.happ.su), и те же ссылки `happ://routing/…`, `incy://routing/…` и autorouting. Профили, которые провайдер уже отдаёт этим клиентам, работают без изменений.
 
 ## Где взять профиль
 
 | Источник | Пример |
 | :-- | :-- |
-| Заголовок `autorouting` | `autorouting: happ://autorouting/onadd/https://example.com/profile.json` — с автообновлением |
-| Строка в теле подписки | `://autorouting/onadd/https://…` или `happ://routing/onadd/<base64>` |
-| Заголовок `routing` | `routing: happ://routing/onadd/<base64>`, просто `<base64>` или `off` |
-| Deep link | `happ://routing/add/<base64>`, `incy://routing/onadd/<base64>` |
+| Заголовок `autorouting` | `autorouting: rvc://autorouting/onadd/https://example.com/profile.json` — с автообновлением |
+| Строка в теле подписки | `://autorouting/onadd/https://…` или `rvc://routing/onadd/<base64>` |
+| Заголовок `routing` | `routing: rvc://routing/onadd/<base64>`, просто `<base64>` или `off` |
+| Deep link | `happ://routing/add/<base64>`, `incy://routing/onadd/<base64>`, `rvc://routing/add/<base64>` |
 | Буфер обмена | «Маршрутизация» → «Вставить профиль или ссылку» |
 
 Если источников несколько, применяется первый по приоритету: заголовок `autorouting` → URL в теле → заголовок `routing` → base64 в теле.
@@ -25,7 +25,7 @@ RVC использует **формат профилей Happ и INCY** (тот 
 | `://routing/add?data={base64}` | Данные в параметре |
 | `://routing/off`, заголовок `routing: off` или `routing-enable: 0` | Выключить маршрутизацию |
 
-Схема перед `://` может быть любой: `happ`, `incy`, `rvc` или пустой. Ссылки `github.com/…/blob/…` автоматически превращаются в `raw.githubusercontent.com`. Файл по URL может содержать JSON, base64 или вложенную ссылку `happ://routing/…`.
+Схема перед `://` может быть любой: `rvc`, `happ`, `incy` или пустой. Ссылки `github.com/…/blob/…` автоматически превращаются в `raw.githubusercontent.com`. Файл по URL может содержать JSON, base64 или вложенную ссылку `rvc://routing/…`.
 
 ## Поля профиля
 

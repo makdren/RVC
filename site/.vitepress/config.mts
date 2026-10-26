@@ -5,7 +5,7 @@ const repo = 'https://github.com/makdren/RVC'
 export default defineConfig({
   lang: 'ru-RU',
   title: 'RVC',
-  description: 'VPN-клиент для Android: подписки Remnawave, Happ и INCY, Xray-core, AmneziaWG.',
+  description: 'VPN-клиент для Android: подписки Remnawave, Xray-core, AmneziaWG.',
   base: '/RVC/',
   cleanUrls: true,
   lastUpdated: true,
@@ -14,7 +14,7 @@ export default defineConfig({
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/RVC/logo.svg' }],
     ['meta', { name: 'theme-color', content: '#07070B' }],
     ['meta', { property: 'og:title', content: 'RVC — документация' }],
-    ['meta', { property: 'og:description', content: 'VPN-клиент для Android, совместимый с Remnawave, Happ и INCY.' }],
+    ['meta', { property: 'og:description', content: 'VPN-клиент для Android: одна кнопка, подписка провайдера и ничего лишнего.' }],
   ],
   themeConfig: {
     logo: '/logo.svg',
@@ -62,7 +62,7 @@ export default defineConfig({
             { text: 'Устройство приложения', link: '/dev/architecture' },
             { text: 'Безопасность', link: '/dev/security' },
             { text: 'Ограничения', link: '/dev/limitations' },
-            { text: 'Сравнение с INCY и Happ', link: '/dev/comparison' },
+            { text: 'Производительность', link: '/dev/performance' },
             { text: 'Статистика', link: '/dev/stats' },
           ],
         },

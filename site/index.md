@@ -4,7 +4,7 @@ layout: home
 hero:
   name: RVC
   text: VPN-клиент для Android
-  tagline: Одна кнопка, подписка провайдера и ничего лишнего. Совместим с Remnawave, Happ и INCY.
+  tagline: Одна кнопка, подписка провайдера и ничего лишнего. Для панели Remnawave.
   image:
     src: /logo.svg
     alt: RVC
@@ -24,8 +24,8 @@ features:
     title: Xray-core и AmneziaWG
     details: VLESS (Reality, Vision, xhttp), VMess, Trojan, Shadowsocks, Hysteria2, SOCKS5, HTTP, WireGuard и AmneziaWG. Полные XRAY_JSON с автовыбором.
   - icon: 🧭
-    title: Как в Happ и INCY
-    details: Те же заголовки подписки, HWID, профили маршрутизации и deep links. Провайдеру не нужно ничего настраивать заново.
+    title: Всё от провайдера
+    details: Имя и логотип, трафик и срок, объявления, профиль маршрутизации и настройки приходят вместе с подпиской. HWID для лимита устройств.
   - icon: 🛡️
     title: Без открытых портов
     details: Трафик идёт через TUN ядра, локальных прокси на 127.0.0.1 нет. DNS — внутри туннеля, kill switch, шифрование данных.

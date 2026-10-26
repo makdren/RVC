@@ -34,19 +34,19 @@ RVC пробует адрес из `fallback-url`. Если подписка н�
 | JSON-массив полных конфигураций Xray (Remnawave XRAY_JSON) | `[{"remarks":"🇩🇪 DE","outbounds":[…]}]` |
 | Одиночная конфигурация Xray | `{"inbounds":[…],"outbounds":[…]}` |
 | `.conf` WireGuard / AmneziaWG целиком | `[Interface]` + `[Peer]` (можно в base64) |
-| JSON-контейнер AmneziaWG (как у INCY) | `{"type":"amneziawg","servers":[{"name":"DE","config":"<base64url .conf>"}]}` |
+| JSON-контейнер AmneziaWG | `{"type":"amneziawg","servers":[{"name":"DE","config":"<base64url .conf>"}]}` |
 
 В текстовом теле также понимаются:
 
 - метаданные `#ключ: значение` (любой [заголовок ответа](/provider/headers)) и форма `#providerid ID`. **Заголовки ответа приоритетнее строк в теле**;
-- строки маршрутизации `happ://routing/onadd/…`, `://autorouting/onadd/https://…` (см. [Профили маршрутизации](/provider/routing));
+- строки маршрутизации `rvc://routing/onadd/…`, `://autorouting/onadd/https://…` (см. [Профили маршрутизации](/provider/routing));
 - «серверы» с адресом `0.0.0.0` или `127.0.0.1` — так панели передают сообщения («Подписка истекла», «Лимит устройств»). Они не попадают в список серверов и показываются как сообщения подписки.
 
 Схемы `ssr://`, `tuic://`, `hysteria://` (v1) пропускаются.
 
 ## Параметры в адресе подписки
 
-После `#` в адресе можно указать имя и параметры запроса, как у Happ:
+После `#` в адресе можно указать имя и параметры запроса:
 
 ```
 https://sub.example.com/abc#Мой VPN
