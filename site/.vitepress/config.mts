@@ -62,7 +62,7 @@ export default defineConfig({
             { text: 'Устройство приложения', link: '/dev/architecture' },
             { text: 'Безопасность', link: '/dev/security' },
             { text: 'Ограничения', link: '/dev/limitations' },
-            { text: 'Производительность', link: '/dev/performance' },
+            { text: 'Производительность и сравнение', link: '/dev/performance' },
             { text: 'Статистика', link: '/dev/stats' },
           ],
         },
