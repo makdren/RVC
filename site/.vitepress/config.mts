@@ -16,9 +16,20 @@ export default defineConfig({
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
     ['meta', { name: 'theme-color', content: '#07070B' }],
     ['meta', { property: 'og:title', content: 'RVC — VPN-клиент для Android' }],
-    ['meta', { property: 'og:url', content: site }],
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:locale', content: 'ru_RU' }],
     ['meta', { property: 'og:description', content: 'VPN-клиент для Android: одна кнопка, подписка провайдера и ничего лишнего.' }],
   ],
+  // Канонический адрес каждой страницы — тот же, что в sitemap.xml (без .html и index).
+  transformPageData(pageData) {
+    const path = pageData.relativePath.replace(/(^|\/)index\.md$/, '$1').replace(/\.md$/, '')
+    const url = `${site}/${path}`
+    pageData.frontmatter.head ??= []
+    pageData.frontmatter.head.push(
+      ['link', { rel: 'canonical', href: url }],
+      ['meta', { property: 'og:url', content: url }],
+    )
+  },
   themeConfig: {
     logo: '/logo.svg',
     siteTitle: 'RVC',
