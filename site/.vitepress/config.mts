@@ -35,6 +35,7 @@ export default defineConfig({
             { text: 'Локации и пинг', link: '/guide/locations' },
             { text: 'Маршрутизация и приложения', link: '/guide/routing' },
             { text: 'Белые списки', link: '/guide/whitelist' },
+            { text: 'Режим прокси', link: '/guide/proxy' },
             { text: 'Плитка, виджет, ярлыки', link: '/guide/quick-access' },
             { text: 'Обновление приложения', link: '/guide/updates' },
             { text: 'Частые вопросы', link: '/guide/faq' },
@@ -69,7 +70,10 @@ export default defineConfig({
         },
       ],
     },
-    socialLinks: [{ icon: 'github', link: repo }],
+    socialLinks: [
+      { icon: 'telegram', link: 'https://t.me/rvcapp', ariaLabel: 'Чат в Telegram' },
+      { icon: 'github', link: repo },
+    ],
     editLink: {
       pattern: `${repo}/edit/main/site/:path`,
       text: 'Предложить правку',
@@ -89,7 +93,7 @@ export default defineConfig({
       linkText: 'На главную',
     },
     footer: {
-      message: 'GPL-3.0 · основан на Фарватере · Xray-core (MPL-2.0), amneziawg-go (MIT)',
+      message: 'GPL-3.0 · Xray-core (MPL-2.0), amneziawg-go (MIT) · <a href="https://t.me/rvcapp">чат в Telegram</a>',
       copyright: 'RVC',
     },
     search: {

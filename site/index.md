@@ -18,6 +18,9 @@ hero:
     - theme: alt
       text: Для провайдеров
       link: /provider/
+    - theme: alt
+      text: Чат в Telegram
+      link: https://t.me/rvcapp
 
 features:
   - icon: ⚡

@@ -11,6 +11,7 @@
 | HTTP-прокси | `http://user:pass@host:port` (`https://` — с TLS). Без `@` строка считается адресом подписки |
 | WireGuard | `wireguard://privateKey@host:port?publickey=&address=&mtu=&reserved=1,2,3&presharedkey=#Имя` |
 | AmneziaWG | `amneziawg://` или `awg://<base64url .conf>#Имя` |
+| AmneziaVPN | `vpn://…` — ссылка AmneziaVPN и совместимых панелей (3x-ui): AmneziaWG, WireGuard или Xray из контейнера по умолчанию |
 
 **Описание сервера** под именем: `#Имя?serverDescription=<base64>` (для VMess — поле `serverDescription`, для JSON — `meta.serverDescription`).
 
