@@ -4,7 +4,7 @@ layout: home
 hero:
   name: RVC
   text: VPN-клиент для Android
-  tagline: Одна кнопка, подписка провайдера и ничего лишнего. Для панели Remnawave.
+  tagline: Одна кнопка, подписка провайдера и ничего лишнего.
   image:
     src: /logo.svg
     alt: RVC
