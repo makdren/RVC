@@ -1,19 +1,22 @@
 import { defineConfig } from 'vitepress'
 
 const repo = 'https://github.com/makdren/RVC'
+const site = 'https://rvc.rowny.online'
 
 export default defineConfig({
   lang: 'ru-RU',
   title: 'RVC',
   description: 'VPN-клиент для Android: подписки Remnawave, Xray-core, AmneziaWG.',
-  base: '/RVC/',
+  base: '/',
   cleanUrls: true,
   lastUpdated: true,
+  sitemap: { hostname: site },
   appearance: 'dark',
   head: [
-    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/RVC/logo.svg' }],
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
     ['meta', { name: 'theme-color', content: '#07070B' }],
-    ['meta', { property: 'og:title', content: 'RVC — документация' }],
+    ['meta', { property: 'og:title', content: 'RVC — VPN-клиент для Android' }],
+    ['meta', { property: 'og:url', content: site }],
     ['meta', { property: 'og:description', content: 'VPN-клиент для Android: одна кнопка, подписка провайдера и ничего лишнего.' }],
   ],
   themeConfig: {
@@ -24,7 +27,7 @@ export default defineConfig({
       { text: 'Провайдерам', link: '/provider/', activeMatch: '/provider/' },
       { text: 'Разработчикам', link: '/dev/build', activeMatch: '/dev/' },
       { text: 'Изменения', link: '/changelog', activeMatch: '/changelog' },
-      { text: 'Скачать', link: `${repo}/releases/latest` },
+      { text: 'Скачать', link: '/#download' },
     ],
     sidebar: {
       '/guide/': [

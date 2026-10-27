@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
     paths: ['site/**', '.github/workflows/docs.yml']
+  release:
+    types: [published] # ссылки «Скачать» ведут на последний релиз
   workflow_dispatch:
 
 permissions:
@@ -32,6 +34,8 @@ jobs:
           cache-dependency-path: site/package-lock.json
       - run: npm ci
       - run: npm run docs:build
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:

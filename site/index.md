@@ -9,9 +9,6 @@ hero:
     src: /logo.svg
     alt: RVC
   actions:
-    - theme: brand
-      text: Скачать
-      link: https://github.com/makdren/RVC/releases/latest
     - theme: alt
       text: Начало работы
       link: /guide/
@@ -45,6 +42,12 @@ features:
 
 <div class="home-section">
 
+## Скачать {#download}
+
+<DownloadList />
+
+Перед установкой Android один раз попросит разрешить установку из браузера. Дальше RVC [обновляется сам](/guide/updates): о новой версии придёт уведомление, а перед установкой приложение сверит SHA-256 и подпись APK.
+
 ## Как выглядит
 
 <div class="shots">
@@ -57,7 +60,7 @@ features:
 
 ## Три шага
 
-1. Скачайте `RVC-x.y.z-arm64-v8a.apk` из [последнего релиза](https://github.com/makdren/RVC/releases/latest) и установите.
+1. Нажмите **«Скачать для Android»** вверху страницы и установите APK.
 2. Скопируйте ссылку на подписку у провайдера и нажмите в RVC **«Из буфера»**.
 3. Нажмите большую кнопку — готово.
 
