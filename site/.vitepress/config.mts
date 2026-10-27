@@ -15,6 +15,7 @@ export default defineConfig({
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
     ['meta', { name: 'theme-color', content: '#07070B' }],
+    ['meta', { name: 'yandex-verification', content: '3691c7dbe36409ee' }],
     ['meta', { property: 'og:title', content: 'RVC — VPN-клиент для Android' }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:locale', content: 'ru_RU' }],
