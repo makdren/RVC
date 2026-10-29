@@ -23,7 +23,7 @@ const main = computed(() => release.value?.apks.find((a) => a.abi === 'arm64-v8a
     </a>
     <p class="dl-meta">
       <template v-if="main">RVC {{ release!.version }} · {{ formatSize(main.size) }} · </template>Android 8.0+ ·
-      <template v-if="windows">Windows {{ windows.version }} · 10/11 x64 ·</template>
+      <template v-if="windows">Windows {{ windows.version }} · 10/11 x64 ·{{ " " }}</template>
       <a href="#download">другие варианты</a>
     </p>
   </div>
