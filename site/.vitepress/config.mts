@@ -47,6 +47,7 @@ export default defineConfig({
           text: 'Пользователям',
           items: [
             { text: 'Начало работы', link: '/guide/' },
+            { text: 'RVC для Windows', link: '/guide/windows' },
             { text: 'Локации и пинг', link: '/guide/locations' },
             { text: 'Маршрутизация и приложения', link: '/guide/routing' },
             { text: 'Белые списки', link: '/guide/whitelist' },

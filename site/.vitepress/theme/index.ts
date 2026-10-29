@@ -3,6 +3,7 @@ import DefaultTheme from 'vitepress/theme'
 import type { Theme } from 'vitepress'
 import DownloadList from './DownloadList.vue'
 import HeroDownload from './HeroDownload.vue'
+import WindowsDownload from './WindowsDownload.vue'
 import './custom.css'
 
 export default {
@@ -11,5 +12,6 @@ export default {
   Layout: () => h(DefaultTheme.Layout, null, { 'home-hero-info-after': () => h(HeroDownload) }),
   enhanceApp({ app }) {
     app.component('DownloadList', DownloadList)
+    app.component('WindowsDownload', WindowsDownload)
   },
 } satisfies Theme

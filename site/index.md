@@ -3,7 +3,7 @@ layout: home
 
 hero:
   name: RVC
-  text: VPN-клиент для Android
+  text: VPN-клиент для Android и Windows
   tagline: Одна кнопка, подписка провайдера и ничего лишнего.
   image:
     src: /logo.svg
@@ -38,6 +38,9 @@ features:
   - icon: 🔄
     title: Обновляется сам
     details: Новая версия приходит из GitHub Releases; перед установкой сверяются SHA-256 и подпись APK.
+  - icon: 🖥️
+    title: Windows
+    details: Окно с боковой навигацией, меню подключения в трее, горячие клавиши и запуск вместе с Windows. VPN на wintun без открытых портов.
 ---
 
 <div class="home-section">
@@ -47,6 +50,17 @@ features:
 <DownloadList />
 
 Перед установкой Android один раз попросит разрешить установку из браузера. Дальше RVC [обновляется сам](/guide/updates): о новой версии придёт уведомление, а перед установкой приложение сверит SHA-256 и подпись APK.
+
+### Windows {#windows}
+
+<WindowsDownload />
+
+Windows 10 и 11, 64 бит. Режим VPN работает через адаптер wintun и требует прав администратора, режим прокси — без них. Трей, горячие клавиши, автозапуск и обновление из приложения — в разделе [RVC для Windows](/guide/windows).
+
+<div class="shots">
+  <figure><img src="/images/windows-home.jpg" alt="RVC для Windows"><figcaption>Главное окно</figcaption></figure>
+  <figure><img src="/images/windows-tray.jpg" alt="Меню трея"><figcaption>Меню в трее</figcaption></figure>
+</div>
 
 ## Как выглядит
 

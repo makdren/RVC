@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { RELEASES_URL, formatSize, useLatestRelease } from './release'
+import { data as windows } from './windows.data'
 
 const release = useLatestRelease()
 const main = computed(() => release.value?.apks.find((a) => a.abi === 'arm64-v8a'))
@@ -14,14 +15,31 @@ const main = computed(() => release.value?.apks.find((a) => a.abi === 'arm64-v8a
       </svg>
       Скачать для Android
     </a>
+    <a class="dl-button alt" :href="windows?.msi?.url ?? '#windows'">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+        <path d="M3 5.5 10.5 4.5v7H3zM12 4.3 21 3v8.5h-9zM3 12.5h7.5v7L3 18.5zM12 12.5h9V21l-9-1.3z" fill="currentColor" />
+      </svg>
+      Windows
+    </a>
     <p class="dl-meta">
       <template v-if="main">RVC {{ release!.version }} · {{ formatSize(main.size) }} · </template>Android 8.0+ ·
+      <template v-if="windows">Windows {{ windows.version }} · 10/11 x64 ·</template>
       <a href="#download">другие варианты</a>
     </p>
   </div>
 </template>
 
 <style scoped>
+.dl-button.alt {
+  margin-left: 10px;
+  color: var(--vp-c-text-1);
+  background: var(--vp-c-default-soft);
+}
+
+.dl-button.alt:hover {
+  background: var(--vp-c-default-2);
+}
+
 .hero-download {
   padding-top: 28px;
 }

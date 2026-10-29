@@ -5,7 +5,7 @@
 <h1 align="center">RVC</h1>
 
 <p align="center">
-  VPN-клиент для Android: одна кнопка, подписка провайдера и ничего лишнего.<br>
+  VPN-клиент для Android и Windows: одна кнопка, подписка провайдера и ничего лишнего.<br>
   Работает с панелью <a href="https://docs.rw">Remnawave</a>, Xray-core и AmneziaWG.
 </p>
 
@@ -16,6 +16,7 @@
 <p align="center">
   <a href="https://github.com/makdren/RVC/releases/latest"><img alt="Последняя версия" src="https://img.shields.io/github/v/release/makdren/RVC?style=flat-square&label=%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D1%8F&color=5B57F0"></a>
   <img alt="Android 8.0+" src="https://img.shields.io/badge/Android-8.0%2B-0FA968?style=flat-square&logo=android&logoColor=white">
+  <img alt="Windows 10/11" src="https://img.shields.io/badge/Windows-10%20%7C%2011-0078D4?style=flat-square">
   <img alt="Xray-core 26.10.21" src="https://img.shields.io/badge/Xray--core-26.10.21-24292f?style=flat-square">
   <img alt="GPL-3.0" src="https://img.shields.io/badge/%D0%BB%D0%B8%D1%86%D0%B5%D0%BD%D0%B7%D0%B8%D1%8F-GPL--3.0-24292f?style=flat-square">
 </p>
@@ -38,6 +39,21 @@
 | `RVC-x.y.z-x86_64.apk`, `-x86.apk` | Эмуляторы и редкие планшеты на Intel |
 
 Дальше приложение обновляется само: о новой версии придёт уведомление, а перед установкой RVC сверит контрольную сумму и подпись APK.
+
+### Windows
+
+Установщик `RVC-windows-x.y.z.msi` — в [релизах windows-v…](https://github.com/makdren/RVC/releases?q=windows&expanded=true) (Windows 10 и 11, 64 бит). Подробности — в разделе [RVC для Windows](https://rvc.rowny.online/guide/windows).
+
+<p align="center">
+  <img src="docs/images/windows-home.jpg" width="560" alt="RVC для Windows">
+  <img src="docs/images/windows-tray.jpg" width="200" alt="Меню в трее">
+</p>
+
+- **Режим VPN** на адаптере wintun: весь трафик ПК через туннель, защита от утечек DNS и IPv6, без открытых портов. **Режим прокси** — без прав администратора.
+- **Меню в трее:** подключение, время и лучшие по пингу локации одним щелчком.
+- **Горячие клавиши:** Ctrl+Alt+V подключает и отключает VPN из любой программы.
+- **Автозапуск** вместе с Windows и запуск без окна UAC.
+- **Обновление из приложения** со сверкой SHA-256.
 
 ## Как пользоваться
 
@@ -101,6 +117,6 @@
 
 ## Исходный код и сборка
 
-Исходники каждой версии приложены к релизу (`RVC-x.y.z-source.zip`). Как собрать — в [документации](https://rvc.rowny.online/dev/build).
+Исходники каждой версии приложены к релизу (`RVC-x.y.z-source.zip`, для Windows — `RVC-windows-x.y.z-source.zip`). Как собрать — в [документации](https://rvc.rowny.online/dev/build).
 
-RVC распространяется под лицензией GPL-3.0. Используются Xray-core и AndroidLibXrayLite (MPL-2.0), amneziawg-go (MIT), reqwest, rustls, tokio (MIT / Apache-2.0), шрифт Inter (OFL-1.1), флаги [circle-flags](https://github.com/HatScripts/circle-flags) (MIT).
+RVC распространяется под лицензией GPL-3.0. Используются Xray-core и AndroidLibXrayLite (MPL-2.0), amneziawg-go (MIT), reqwest, rustls, tokio (MIT / Apache-2.0), Compose Multiplatform (Apache-2.0), JNA (Apache-2.0), Wintun (лицензия WireGuard LLC на распространение без изменений), шрифт Inter (OFL-1.1), флаги [circle-flags](https://github.com/HatScripts/circle-flags) (MIT).

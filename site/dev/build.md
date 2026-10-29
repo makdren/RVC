@@ -56,6 +56,37 @@ RVC раз в сутки читает `https://github.com/makdren/RVC/releases/l
 }
 ```
 
+## Windows {#windows}
+
+Нужны JDK 21, Go 1.27 и Rust с целью `x86_64-pc-windows-gnu` (MinGW-w64). Модуль `desktop/` — Compose Multiplatform поверх общего модуля `shared`.
+
+```sh
+desktop/scripts/build-natives.sh    # rvc-core.exe (Go + Xray-core), rvcnet.dll, wintun.dll и геобазы → desktop/resources/windows
+./gradlew :desktop:test :desktop:packageMsi :desktop:packageExe -PrvcDesktopVersion=1.0.0
+```
+
+Установщики появятся в `desktop/build/compose/binaries/main/{msi,exe}`. В полях MSI (описание, производитель) — только латиница: WiX собирает его в кодовой странице 1252.
+
+Выпуск — отдельным релизом `windows-vX.Y.Z`, **не** «последним», чтобы `releases/latest` по-прежнему вёл к Android и его `update.json`:
+
+```sh
+# установщики переименовываются в RVC-windows-<версия>.msi / .exe и кладутся в dist/
+python scripts/make-windows-update.py 1.0.0 dist makdren/RVC notes-windows.txt   # update-windows.json
+gh release create windows-v1.0.0 -R makdren/RVC --latest=false dist/RVC-windows-1.0.0.* dist/update-windows.json
+```
+
+RVC для Windows находит самый свежий релиз `windows-v…` через GitHub API и читает из него `update-windows.json`:
+
+```json
+{
+  "version": "1.0.0",
+  "notes": ["Что изменилось"],
+  "msi": {"url": "https://github.com/makdren/RVC/releases/download/windows-v1.0.0/RVC-windows-1.0.0.msi", "sha256": "…", "size": 127726430}
+}
+```
+
+Установщик принимается только с `github.com/makdren/RVC/releases/download/windows-v…` и только при совпадении размера и SHA-256. MSI с тем же UpgradeCode ставится поверх: номер версии должен расти.
+
 ## Этот сайт
 
 Документация лежит в папке `site/` репозитория и собирается [VitePress](https://vitepress.dev). При каждом изменении в `main` GitHub Actions пересобирает сайт и публикует его на GitHub Pages.
