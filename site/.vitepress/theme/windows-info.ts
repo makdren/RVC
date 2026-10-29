@@ -16,6 +16,8 @@ export interface WindowsRelease {
   version: string
   date: string
   page: string
+  /** Портативная версия: ZIP с папкой RVC, установка не нужна (с 1.1.0 — основной способ). */
+  portable?: WinFile
   msi?: WinFile
   exe?: WinFile
   source?: WinFile
@@ -41,9 +43,10 @@ export function parseWindowsRelease(list: any): WindowsRelease | null {
     page: rel.html_url,
   }
   for (const a of rel.assets) {
-    if (a.name.endsWith('.msi')) out.msi = file(a)
+    if (a.name.endsWith('-portable.zip')) out.portable = file(a)
+    else if (a.name.endsWith('.msi')) out.msi = file(a)
     else if (a.name.endsWith('.exe')) out.exe = file(a)
     else if (a.name.endsWith('-source.zip')) out.source = file(a)
   }
-  return out.msi || out.exe ? out : null
+  return out.portable || out.msi || out.exe ? out : null
 }

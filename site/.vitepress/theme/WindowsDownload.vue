@@ -12,8 +12,14 @@ import { formatDate, formatSize } from './release-info'
         <a href="/guide/windows">как установить</a>
       </p>
       <div class="dl-grid">
-        <a v-if="release.msi" class="dl-card recommended" :href="release.msi.url">
-          <span class="dl-title">Установщик MSI <span class="dl-badge">берите этот</span></span>
+        <a v-if="release.portable" class="dl-card recommended" :href="release.portable.url">
+          <span class="dl-title">Портативная версия <span class="dl-badge">берите этот</span></span>
+          <span class="dl-hint">ZIP: распакуйте и запустите RVC.exe, установка не нужна</span>
+          <span class="dl-size">{{ formatSize(release.portable.size) }}</span>
+          <code v-if="release.portable.sha256" class="dl-sha" :title="`SHA-256: ${release.portable.sha256}`">SHA-256 {{ release.portable.sha256.slice(0, 16) }}…</code>
+        </a>
+        <a v-if="release.msi" class="dl-card" :class="{ recommended: !release.portable }" :href="release.msi.url">
+          <span class="dl-title">Установщик MSI <span v-if="!release.portable" class="dl-badge">берите этот</span></span>
           <span class="dl-hint">Windows 10 и 11, 64 бит</span>
           <span class="dl-size">{{ formatSize(release.msi.size) }}</span>
           <code v-if="release.msi.sha256" class="dl-sha" :title="`SHA-256: ${release.msi.sha256}`">SHA-256 {{ release.msi.sha256.slice(0, 16) }}…</code>
@@ -31,7 +37,7 @@ import { formatDate, formatSize } from './release-info'
       </p>
     </template>
     <p v-else>
-      Установщики лежат в <a :href="WINDOWS_RELEASES_URL">релизах windows-v…</a>: нужен <code>RVC-windows-x.y.z.msi</code>.
+      Windows-версия лежит в <a :href="WINDOWS_RELEASES_URL">релизах windows-v…</a>: нужен <code>RVC-windows-x.y.z-portable.zip</code>.
     </p>
   </div>
 </template>

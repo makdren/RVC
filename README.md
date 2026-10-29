@@ -42,7 +42,7 @@
 
 ### Windows
 
-Установщик `RVC-windows-x.y.z.msi` — в [релизах windows-v…](https://github.com/makdren/RVC/releases?q=windows&expanded=true) (Windows 10 и 11, 64 бит). Подробности — в разделе [RVC для Windows](https://rvc.rowny.online/guide/windows).
+Портативная версия `RVC-windows-x.y.z-portable.zip` (распаковать и запустить `RVC.exe`, установка не нужна) — в [релизах windows-v…](https://github.com/makdren/RVC/releases?q=windows&expanded=true) (Windows 10 и 11, 64 бит). Подробности — в разделе [RVC для Windows](https://rvc.rowny.online/guide/windows).
 
 <p align="center">
   <img src="docs/images/windows-home.jpg" width="560" alt="RVC для Windows">

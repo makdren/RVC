@@ -15,7 +15,7 @@ const main = computed(() => release.value?.apks.find((a) => a.abi === 'arm64-v8a
       </svg>
       Скачать для Android
     </a>
-    <a class="dl-button alt" :href="windows?.msi?.url ?? '#windows'">
+    <a class="dl-button alt" :href="windows?.portable?.url ?? windows?.msi?.url ?? '#windows'">
       <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
         <path d="M3 5.5 10.5 4.5v7H3zM12 4.3 21 3v8.5h-9zM3 12.5h7.5v7L3 18.5zM12 12.5h9V21l-9-1.3z" fill="currentColor" />
       </svg>
