@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitepress'
 
 const repo = 'https://github.com/makdren/RVC'
-const site = 'https://rvc.rowny.online'
+const site = 'https://rvc.rowny.shop'
 
 export default defineConfig({
   lang: 'ru-RU',
