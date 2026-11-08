@@ -6,7 +6,7 @@ const site = 'https://rvc.rowny.shop'
 export default defineConfig({
   lang: 'ru-RU',
   title: 'RVC',
-  description: 'VPN-клиент для Android: подписки Remnawave, Xray-core, AmneziaWG.',
+  description: 'VPN-клиент для Android, Android TV и Windows: подписки Remnawave, Xray-core, AmneziaWG.',
   base: '/',
   cleanUrls: true,
   lastUpdated: true,
@@ -16,10 +16,10 @@ export default defineConfig({
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
     ['meta', { name: 'theme-color', content: '#07070B' }],
     ['meta', { name: 'yandex-verification', content: '3691c7dbe36409ee' }],
-    ['meta', { property: 'og:title', content: 'RVC — VPN-клиент для Android' }],
+    ['meta', { property: 'og:title', content: 'RVC — VPN-клиент для Android, TV и Windows' }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:locale', content: 'ru_RU' }],
-    ['meta', { property: 'og:description', content: 'VPN-клиент для Android: одна кнопка, подписка провайдера и ничего лишнего.' }],
+    ['meta', { property: 'og:description', content: 'VPN-клиент для Android, TV и Windows: одна кнопка и подписка провайдера. Передача подписки на TV по QR-коду.' }],
   ],
   // Канонический адрес каждой страницы — тот же, что в sitemap.xml (без .html и index).
   transformPageData(pageData) {
@@ -48,6 +48,7 @@ export default defineConfig({
           items: [
             { text: 'Начало работы', link: '/guide/' },
             { text: 'RVC для Windows', link: '/guide/windows' },
+            { text: 'RVC для Android TV', link: '/guide/android-tv' },
             { text: 'Локации и пинг', link: '/guide/locations' },
             { text: 'Маршрутизация и приложения', link: '/guide/routing' },
             { text: 'Белые списки', link: '/guide/whitelist' },

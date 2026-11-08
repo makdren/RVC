@@ -3,7 +3,7 @@ layout: home
 
 hero:
   name: RVC
-  text: VPN-клиент для Android и Windows
+  text: VPN-клиент для Android, TV и Windows
   tagline: Одна кнопка, подписка провайдера и ничего лишнего.
   image:
     src: /logo.svg
@@ -27,7 +27,7 @@ features:
     title: Всё от провайдера
     details: Имя и логотип, трафик и срок, объявления, профиль маршрутизации и настройки приходят вместе с подпиской. HWID для лимита устройств.
   - icon: 🛡️
-    title: Без открытых портов
+    title: VPN без локального прокси
     details: Трафик идёт через TUN ядра, локальных прокси на 127.0.0.1 нет. DNS — внутри туннеля, kill switch, шифрование данных.
   - icon: 🟢
     title: Индикатор белых списков
@@ -62,15 +62,29 @@ Windows 10 и 11, 64 бит. Режим VPN работает через адап
   <figure><img src="/images/windows-tray.jpg" alt="Меню трея"><figcaption>Меню в трее</figcaption></figure>
 </div>
 
+### Android TV {#android-tv}
+
+В RVC 1.1.1 есть отдельный интерфейс для пульта. Подписку можно передать с телефона:
+откройте QR-код на телевизоре, отсканируйте его в RVC на телефоне и подтвердите добавление.
+Подробности — в разделе [RVC для Android TV](/guide/android-tv).
+
+<div class="tv-shots">
+  <figure><img src="/images/android-tv-home-1.1.1.png" alt="Главный экран RVC 1.1.1 для Android TV с демонстрационной подпиской" loading="lazy"><figcaption>Android TV · управление пультом</figcaption></figure>
+</div>
+
 ## Как выглядит
 
 <div class="shots">
-  <figure><img src="/images/home-1.1.0.png" alt="Главный экран RVC 1.1.0"><figcaption>Android 1.1.0</figcaption></figure>
+  <figure><img src="/images/home-dark-1.1.1.png" alt="Главный экран RVC 1.1.1 в эмуляторе"><figcaption>Android 1.1.1 · тёмная тема</figcaption></figure>
   <figure><img src="/images/locations.jpg" alt="Локации"><figcaption>Локации и пинг</figcaption></figure>
   <figure><img src="/images/routing.jpg" alt="Маршрутизация"><figcaption>Маршрутизация</figcaption></figure>
   <figure><img src="/images/settings.jpg" alt="Настройки"><figcaption>Настройки</figcaption></figure>
-  <figure><img src="/images/home-light.jpg" alt="Светлая тема"><figcaption>Светлая тема</figcaption></figure>
+  <figure><img src="/images/home-light-1.1.1.png" alt="RVC 1.1.1 в светлой теме"><figcaption>Светлая тема</figcaption></figure>
+  <figure><img src="/images/android-import-1.1.1.png" alt="Добавление подписки и сканирование QR"><figcaption>Добавление и QR</figcaption></figure>
+  <figure><img src="/images/home-layout-1.1.1.png" alt="Изменение порядка блоков главного экрана"><figcaption>Порядок блоков</figcaption></figure>
 </div>
+
+Новые скриншоты Android и TV сняты в эмуляторе с демонстрационной подпиской.
 
 ## Три шага
 

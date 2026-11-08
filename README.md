@@ -5,7 +5,7 @@
 <h1 align="center">RVC</h1>
 
 <p align="center">
-  VPN-клиент для Android и Windows: одна кнопка, подписка провайдера и ничего лишнего.<br>
+  VPN-клиент для Android, Android TV и Windows: одна кнопка, подписка провайдера и ничего лишнего.<br>
   Работает с панелью <a href="https://docs.rw">Remnawave</a>, Xray-core и AmneziaWG.
 </p>
 
@@ -22,8 +22,8 @@
 </p>
 
 <p align="center">
-  <img src="docs/images/home-light.jpg" width="216" alt="Главный экран">
-  <img src="docs/images/home-1.1.0.png" width="216" alt="RVC 1.1.0, подключено">
+  <img src="docs/images/home-light-1.1.1.png" width="216" alt="RVC 1.1.1, светлая тема">
+  <img src="docs/images/home-dark-1.1.1.png" width="216" alt="RVC 1.1.1, тёмная тема">
   <img src="docs/images/locations.jpg" width="216" alt="Локации и пинг">
 </p>
 
@@ -56,6 +56,11 @@
 - **Обновление из приложения** со сверкой SHA-256.
 
 ## Как пользоваться
+
+**Android TV и Google TV:** начиная с 1.1.1 универсальный APK содержит интерфейс для пульта.
+Откройте QR-код на телевизоре, отсканируйте его в RVC 1.1.1 на телефоне и отправьте подписку.
+Передача идёт напрямую с шифрованием; добавление подтверждается на TV.
+[Установка и управление](https://rvc.rowny.shop/guide/android-tv).
 
 1. Скопируйте ссылку на подписку из личного кабинета или бота провайдера.
 2. Откройте RVC и нажмите **«Из буфера»** — или нажмите кнопку добавления на странице подписки: RVC откроется сам.
