@@ -23,7 +23,7 @@
 
 <p align="center">
   <img src="docs/images/home-light.jpg" width="216" alt="Главный экран">
-  <img src="docs/images/home-dark.jpg" width="216" alt="Подключено, тёмная тема">
+  <img src="docs/images/home-1.1.0.png" width="216" alt="RVC 1.1.0, подключено">
   <img src="docs/images/locations.jpg" width="216" alt="Локации и пинг">
 </p>
 

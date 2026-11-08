@@ -65,7 +65,7 @@ Windows 10 и 11, 64 бит. Режим VPN работает через адап
 ## Как выглядит
 
 <div class="shots">
-  <figure><img src="/images/home-dark.jpg" alt="Главный экран"><figcaption>Главный экран</figcaption></figure>
+  <figure><img src="/images/home-1.1.0.png" alt="Главный экран RVC 1.1.0"><figcaption>Android 1.1.0</figcaption></figure>
   <figure><img src="/images/locations.jpg" alt="Локации"><figcaption>Локации и пинг</figcaption></figure>
   <figure><img src="/images/routing.jpg" alt="Маршрутизация"><figcaption>Маршрутизация</figcaption></figure>
   <figure><img src="/images/settings.jpg" alt="Настройки"><figcaption>Настройки</figcaption></figure>

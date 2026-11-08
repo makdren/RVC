@@ -38,7 +38,7 @@ RVC работает на Android 8.0 и новее. Приложение не �
 ## Главный экран
 
 <div class="shots">
-  <figure><img src="/images/home-dark.jpg" alt="Главный экран"><figcaption>Подключено</figcaption></figure>
+  <figure><img src="/images/home-1.1.0.png" alt="Главный экран RVC 1.1.0"><figcaption>Подключено · 1.1.0</figcaption></figure>
   <figure><img src="/images/home-light.jpg" alt="Светлая тема"><figcaption>Светлая тема</figcaption></figure>
 </div>
 
