@@ -9,6 +9,7 @@ const main = computed(() => release.value?.apks.find((a) => a.abi === 'arm64-v8a
 
 <template>
   <div class="hero-download">
+    <div class="hero-actions">
     <a class="dl-button" :href="main?.url ?? RELEASES_URL">
       <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
         <path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19.5h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
@@ -21,6 +22,8 @@ const main = computed(() => release.value?.apks.find((a) => a.abi === 'arm64-v8a
       </svg>
       Windows
     </a>
+    <a class="dl-button alt" href="#android-tv">Android TV</a>
+    </div>
     <p class="dl-meta">
       <template v-if="main">RVC {{ release!.version }} · {{ formatSize(main.size) }} · </template>Android 8.0+ ·
       <template v-if="windows">Windows {{ windows.version }} · 10/11 x64 ·{{ " " }}</template>
@@ -31,7 +34,6 @@ const main = computed(() => release.value?.apks.find((a) => a.abi === 'arm64-v8a
 
 <style scoped>
 .dl-button.alt {
-  margin-left: 10px;
   color: var(--vp-c-text-1);
   background: var(--vp-c-default-soft);
 }
@@ -43,14 +45,19 @@ const main = computed(() => release.value?.apks.find((a) => a.abi === 'arm64-v8a
 .hero-download {
   padding-top: 28px;
 }
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
 
 .dl-button {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 0 26px;
+  padding: 0 18px;
   height: 52px;
-  border-radius: 26px;
+  border-radius: 14px;
   font-size: 17px;
   font-weight: 600;
   color: var(--vp-button-brand-text);
@@ -84,9 +91,10 @@ const main = computed(() => release.value?.apks.find((a) => a.abi === 'arm64-v8a
   text-decoration: underline;
 }
 
-@media (max-width: 959px) {
+@media (max-width: 767px) {
   .hero-download {
     text-align: center;
   }
+  .hero-actions { justify-content: center; }
 }
 </style>

@@ -35,20 +35,23 @@ export default defineConfig({
     logo: '/logo.svg',
     siteTitle: 'RVC',
     nav: [
-      { text: 'Пользователям', link: '/guide/', activeMatch: '/guide/' },
-      { text: 'Провайдерам', link: '/provider/', activeMatch: '/provider/' },
-      { text: 'Разработчикам', link: '/dev/build', activeMatch: '/dev/' },
-      { text: 'Изменения', link: '/changelog', activeMatch: '/changelog' },
+      { text: 'Руководства', link: '/guide/', activeMatch: '/guide/' },
+      { text: 'Помощь', link: '/guide/faq' },
       { text: 'Скачать', link: '/#download' },
     ],
     sidebar: {
       '/guide/': [
         {
-          text: 'Пользователям',
+          text: 'Установка и подключение',
           items: [
-            { text: 'Начало работы', link: '/guide/' },
+            { text: 'RVC для Android', link: '/guide/' },
             { text: 'RVC для Windows', link: '/guide/windows' },
             { text: 'RVC для Android TV', link: '/guide/android-tv' },
+          ],
+        },
+        {
+          text: 'Настройка и помощь',
+          items: [
             { text: 'Локации и пинг', link: '/guide/locations' },
             { text: 'Маршрутизация и приложения', link: '/guide/routing' },
             { text: 'Белые списки', link: '/guide/whitelist' },

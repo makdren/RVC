@@ -34,18 +34,80 @@
   --vp-button-brand-active-bg: #6c6cf0;
 }
 
-/* Стеклянные карточки возможностей, как в приложении. */
-.VPFeature {
-  border: 1px solid var(--vp-c-divider);
-  background: color-mix(in srgb, var(--vp-c-bg-elv) 70%, transparent) !important;
-  backdrop-filter: blur(12px);
-  border-radius: 20px !important;
+/* The homepage pairs real product imagery with the same palette as the docs. */
+.VPHome {
+  background: radial-gradient(ellipse at 72% 4%, var(--vp-c-brand-soft), transparent 34rem);
+  padding-bottom: 72px;
 }
 
-.VPHero .image-src {
-  border-radius: 28%;
-  max-width: 200px;
-  max-height: 200px;
+.VPHome .VPHero { padding-bottom: 32px; }
+.VPHome .VPHero .name { font-size: clamp(30px, 5vw, 52px); }
+.VPHome .VPHero .text { font-size: clamp(34px, 5.3vw, 64px); line-height: 1.08; letter-spacing: -0.055em; }
+.VPHome .VPHero .tagline { max-width: 31rem; font-size: clamp(16px, 2vw, 20px); line-height: 1.55; }
+.VPHome .VPHero .image-src {
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 26px;
+  width: auto;
+  height: 370px;
+  max-height: none;
+  box-shadow: 0 16px 42px #10092833;
+}
+
+.platform-grid, .start-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 20px 0 0;
+}
+
+.platform-card, .start-steps li {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  min-width: 0;
+  padding: 22px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 20px;
+  background: var(--vp-c-bg-elv);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.vp-doc a.platform-card {
+  grid-template-rows: auto auto 1fr auto;
+  color: var(--vp-c-text-1);
+  text-decoration: none;
+}
+.platform-card:hover { border-color: var(--vp-c-brand-1); }
+.platform-card:focus-visible, .hero-download a:focus-visible, .downloads a:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 3px;
+}
+.platform-card strong { font-size: 24px; letter-spacing: -0.025em; }
+.platform-card span, .start-steps span { color: var(--vp-c-text-2); }
+.platform-card .platform-label { font-size: 13px; font-weight: 600; }
+.platform-card .platform-link { color: var(--vp-c-brand-1); font-weight: 600; margin-top: 6px; }
+
+.start-steps { counter-reset: step; padding: 0; list-style: none; }
+.start-steps li { counter-increment: step; background: transparent; }
+.start-steps li::before { content: counter(step) "."; color: var(--vp-c-brand-1); font-weight: 700; }
+.home-section > p { margin: 16px 0; line-height: 1.65; }
+.home-section > p a { color: var(--vp-c-brand-1); text-decoration: underline; text-underline-offset: 3px; }
+.vp-doc .home-section > h2:first-child { margin-top: 0; padding-top: 0; }
+.home-section > h2:not(:first-child) { margin-top: 48px; }
+.home-section > h3 { margin: 30px 0 8px; font-weight: 650; font-size: 19px; }
+.home-section [id] { scroll-margin-top: 84px; }
+
+@media (max-width: 767px) {
+  .VPHome .VPHero .image-src { height: 190px; border-radius: 18px; }
+  .VPHome .VPHero .tagline { margin-inline: auto; }
+  .platform-grid, .start-steps { grid-template-columns: 1fr; }
+  .platform-card, .start-steps li { padding: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-download .dl-button, .downloads .dl-card { transition: none; }
+  .hero-download .dl-button:active, .downloads .dl-card:active { transform: none; }
 }
 
 /* Галерея скриншотов на главной и в разделах. */
@@ -97,7 +159,7 @@
 .home-section {
   max-width: 1152px;
   margin: 0 auto;
-  padding: 48px 24px 0;
+  padding: 24px 0 0;
 }
 
 .home-section h2 {

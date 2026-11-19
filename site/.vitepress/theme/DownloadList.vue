@@ -1,19 +1,22 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { RELEASES_URL, formatDate, formatSize, useLatestRelease } from './release'
 
+const props = defineProps<{ abi?: string }>()
 const release = useLatestRelease()
+const apks = computed(() => release.value?.apks.filter((apk) => !props.abi || apk.abi === props.abi) ?? [])
 </script>
 
 <template>
   <div class="downloads">
-    <template v-if="release">
+    <template v-if="release && apks.length">
       <p class="dl-version">
         RVC {{ release.version }} от {{ formatDate(release.date) }} ·
         <a href="/changelog">что нового</a>
       </p>
       <div class="dl-grid">
         <a
-          v-for="apk in release.apks"
+          v-for="apk in apks"
           :key="apk.abi"
           class="dl-card"
           :class="{ recommended: apk.abi === 'arm64-v8a' }"
@@ -21,7 +24,7 @@ const release = useLatestRelease()
         >
           <span class="dl-title">
             {{ apk.title }}
-            <span v-if="apk.abi === 'arm64-v8a'" class="dl-badge">берите этот</span>
+            <span v-if="apk.abi === 'arm64-v8a'" class="dl-badge">Рекомендуем</span>
           </span>
           <span class="dl-hint">{{ apk.hint }}</span>
           <span class="dl-size">{{ formatSize(apk.size) }}</span>
@@ -34,8 +37,8 @@ const release = useLatestRelease()
       </p>
     </template>
     <p v-else>
-      Файлы лежат на <a :href="RELEASES_URL">странице последнего релиза</a>: для большинства телефонов нужен
-      <code>RVC-x.y.z-arm64-v8a.apk</code>.
+      Откройте <a :href="release?.page ?? RELEASES_URL">последний релиз на GitHub</a> и выберите
+      <code>{{ abi === 'universal' ? 'RVC-x.y.z-universal.apk' : 'RVC-x.y.z-arm64-v8a.apk' }}</code>.
     </p>
   </div>
 </template>
@@ -49,7 +52,7 @@ const release = useLatestRelease()
 
 .dl-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr));
   gap: 12px;
   margin: 12px 0;
 }
@@ -83,6 +86,7 @@ const release = useLatestRelease()
 .dl-title {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
   font-weight: 600;
   font-size: 16px;
