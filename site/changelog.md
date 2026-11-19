@@ -6,7 +6,14 @@ outline: [2, 2]
 
 Все версии и файлы — в [релизах на GitHub](https://github.com/makdren/RVC/releases). Приложение обновляется само: о новой версии сообщит баннер на главном экране.
 
-## 1.2.0 <Badge type="tip" text="последняя" /> {#v1-2-0}
+## 1.2.1 <Badge type="tip" text="последняя" /> {#v1-2-1}
+
+<small>19 ноября 2026 · [релиз Android и Android TV](https://github.com/makdren/RVC/releases/tag/v1.2.1)</small>
+
+- Все варианты фона плавно меняются при подключении и отключении VPN.
+- Цветные фоны сохраняют выбранный оттенок, а однотонный меняет цвет без градиента.
+
+## 1.2.0 {#v1-2-0}
 
 <small>19 ноября 2026 · [релиз Android и Android TV](https://github.com/makdren/RVC/releases/tag/v1.2.0)</small>
 
