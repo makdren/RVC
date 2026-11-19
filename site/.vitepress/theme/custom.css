@@ -41,15 +41,13 @@
 }
 
 .VPHome .VPHero { padding-bottom: 32px; }
-.VPHome .VPHero .name { font-size: clamp(30px, 5vw, 52px); }
 .VPHome .VPHero .text { font-size: clamp(34px, 5.3vw, 64px); line-height: 1.08; letter-spacing: -0.055em; }
 .VPHome .VPHero .tagline { max-width: 31rem; font-size: clamp(16px, 2vw, 20px); line-height: 1.55; }
 .VPHome .VPHero .image-src {
   border: 1px solid var(--vp-c-divider);
-  border-radius: 26px;
-  width: auto;
-  height: 370px;
-  max-height: none;
+  border-radius: 28%;
+  width: 184px;
+  height: 184px;
   box-shadow: 0 16px 42px #10092833;
 }
 
@@ -99,7 +97,10 @@
 .home-section [id] { scroll-margin-top: 84px; }
 
 @media (max-width: 767px) {
-  .VPHome .VPHero .image-src { height: 190px; border-radius: 18px; }
+  .VPHome .VPHero .image { margin: 0 0 20px; }
+  .VPHome .VPHero .image-container { width: 88px; height: 88px; }
+  .VPHome .VPHero .image-bg { display: none; }
+  .VPHome .VPHero .image-src { width: 88px; height: 88px; border-radius: 22px; }
   .VPHome .VPHero .tagline { margin-inline: auto; }
   .platform-grid, .start-steps { grid-template-columns: 1fr; }
   .platform-card, .start-steps li { padding: 16px; }
@@ -194,4 +195,17 @@
   display: block;
   color: var(--vp-c-brand-1);
   margin-bottom: 4px;
+}
+
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .VPNavBar .DocSearch-Button {
+    justify-content: center;
+    width: 40px;
+    padding: 0;
+  }
+  .VPNavBar .DocSearch-Button .DocSearch-Search-Icon { margin-right: 0; }
+  .VPNavBar .DocSearch-Button .DocSearch-Button-Placeholder,
+  .VPNavBar .DocSearch-Button .DocSearch-Button-Keys { display: none; }
+  .VPNavBarMenu .VPNavBarMenuLink { padding-inline: 8px; }
 }

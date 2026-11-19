@@ -3,12 +3,11 @@ layout: home
 description: Скачайте RVC для Android, Android TV или Windows. Пошаговые инструкции по установке, добавлению подписки и подключению.
 
 hero:
-  name: RVC
   text: Подключите свой VPN
   tagline: Установите RVC, добавьте подписку вашего провайдера и выберите локацию. Для телефона, телевизора и ПК.
   image:
-    src: /images/android-home-dark-1.2.0.webp
-    alt: Главный экран RVC на Android
+    src: /logo.svg
+    alt: RVC
 ---
 
 <div class="home-section">

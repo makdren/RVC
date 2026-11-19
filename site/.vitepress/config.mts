@@ -35,7 +35,9 @@ export default defineConfig({
     logo: '/logo.svg',
     siteTitle: 'RVC',
     nav: [
-      { text: 'Руководства', link: '/guide/', activeMatch: '/guide/' },
+      { text: 'Документация', link: '/guide/', activeMatch: '/guide/' },
+      { text: 'Провайдерам', link: '/provider/', activeMatch: '/provider/' },
+      { text: 'Разработчикам', link: '/dev/build', activeMatch: '/dev/' },
       { text: 'Помощь', link: '/guide/faq' },
       { text: 'Скачать', link: '/#download' },
     ],
