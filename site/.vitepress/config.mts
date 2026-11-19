@@ -60,6 +60,7 @@ export default defineConfig({
             { text: 'Режим прокси', link: '/guide/proxy' },
             { text: 'Плитка, виджет, ярлыки', link: '/guide/quick-access' },
             { text: 'Обновление приложения', link: '/guide/updates' },
+            { text: 'Изменения', link: '/changelog' },
             { text: 'Частые вопросы', link: '/guide/faq' },
           ],
         },
