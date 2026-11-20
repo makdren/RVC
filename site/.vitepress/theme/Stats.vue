@@ -41,7 +41,7 @@ const sum = (o, keys) => keys.reduce((s, k) => s + (o[k] || 0), 0)
 const totalApk = computed(() => releases.value.reduce((s, r) => s + sum(r.counts, ABIS), 0))
 const totalChecks = computed(() => releases.value.reduce((s, r) => s + (r.counts.update || 0), 0))
 
-/** Суточные приросты: проверки обновлений (≈ активные установки) и скачивания APK. */
+/** Суточные приросты: проверки обновлений и скачивания APK. */
 const days = computed(() => {
   const totals = history.value.map((snap) => {
     let checks = 0
@@ -75,7 +75,7 @@ const maxBar = computed(() => Math.max(1, ...days.value.map((d) => Math.max(d.ch
       <div class="tiles">
         <div class="tile">
           <div class="value">{{ active ?? '—' }}</div>
-          <div class="label">активных установок<br><span>проверок обновлений за последние сутки</span></div>
+          <div class="label">проверок обновлений<br><span>за последние сутки</span></div>
         </div>
         <div class="tile">
           <div class="value">{{ totalApk.toLocaleString('ru-RU') }}</div>

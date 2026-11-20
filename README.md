@@ -22,8 +22,8 @@
 </p>
 
 <p align="center">
-  <img src="docs/images/home-light-1.1.1.png" width="216" alt="RVC 1.1.1, светлая тема">
-  <img src="docs/images/home-dark-1.1.1.png" width="216" alt="RVC 1.1.1, тёмная тема">
+  <img src="site/public/images/android-home-light-1.2.0.webp" width="216" alt="RVC 1.2.0, светлая тема">
+  <img src="site/public/images/android-home-dark-1.2.0.webp" width="216" alt="RVC 1.2.0, тёмная тема">
   <img src="docs/images/locations.jpg" width="216" alt="Локации и пинг">
 </p>
 
@@ -58,7 +58,7 @@
 ## Как пользоваться
 
 **Android TV и Google TV:** начиная с 1.1.1 универсальный APK содержит интерфейс для пульта.
-Откройте QR-код на телевизоре, отсканируйте его в RVC 1.1.1 на телефоне и отправьте подписку.
+Откройте QR-код на телевизоре, отсканируйте его в RVC 1.1.1 или новее на телефоне и отправьте подписку.
 Передача идёт напрямую с шифрованием; добавление подтверждается на TV.
 [Установка и управление](https://rvc.rowny.shop/guide/android-tv).
 

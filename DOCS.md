@@ -6,6 +6,10 @@
 | :-- | :-- |
 | Начало работы | https://rvc.rowny.shop/guide/ |
 | Локации и пинг | https://rvc.rowny.shop/guide/locations |
+| Android TV | https://rvc.rowny.shop/guide/android-tv |
+| Windows | https://rvc.rowny.shop/guide/windows |
+| Обновление | https://rvc.rowny.shop/guide/updates |
+| Изменения | https://rvc.rowny.shop/changelog |
 | Частые вопросы | https://rvc.rowny.shop/guide/faq |
 | Настройка Remnawave | https://rvc.rowny.shop/provider/ |
 | Запрос подписки и HWID | https://rvc.rowny.shop/provider/subscription |
