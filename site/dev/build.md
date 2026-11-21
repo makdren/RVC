@@ -5,19 +5,19 @@
 ## Что нужно
 
 - JDK 21 для сборки. Для исходников с Gradle 8.14.3 подойдёт и JDK 17.
-- Для опубликованного Android 1.2.1 нужны Android SDK Platform 36, Build Tools 36 и NDK 27.2.12479018.
+- Для Android 1.2.2 нужны Android SDK Platform 37.2, Build Tools 37.0.0, NDK 27.2.12479018 и Go 1.27.
 - Rust (stable) с целями `aarch64-linux-android`, `armv7-linux-androideabi`, `x86_64-linux-android`, `i686-linux-android` и [`cargo-ndk`](https://github.com/bbqsrc/cargo-ndk);
-- Python 3, GitHub CLI, `unzip` и `sha256sum` для подготовки нативных компонентов.
+- Python 3.11 или новее, GitHub CLI, `unzip` и `sha256sum` для подготовки нативных компонентов.
 
 ## Сборка
 
 ```sh
-./scripts/fetch-natives.sh   # libv2ray.aar (Xray) и libwg-go.so (AmneziaWG) с проверкой SHA-256, урезанные геобазы
+./scripts/fetch-natives.sh   # собирает Xray и AmneziaWG из зафиксированных исходников, проверяет и урезает геобазы
 ./scripts/build-rust.sh      # librvcnet.so для четырёх ABI
-./gradlew :app:testDebugUnitTest :app:assembleRelease -PrvcVersion=1.2.1
+./gradlew :app:testDebugUnitTest :app:assembleRelease -PrvcVersion=1.2.2
 ```
 
-APK появятся в `app/build/outputs/apk/release/`. Будут отдельные файлы для каждой архитектуры и универсальный APK. В Windows вместо `./gradlew` можно вызвать `.\gradlew.bat`. В PowerShell берите целиком в кавычки аргументы с версией, например `"-PrvcVersion=1.2.1"`.
+APK появятся в `app/build/outputs/apk/release/`. Будут отдельные файлы для каждой архитектуры и универсальный APK. В Windows вместо `./gradlew` можно вызвать `.\gradlew.bat`. В PowerShell берите целиком в кавычки аргументы с версией, например `"-PrvcVersion=1.2.2"`.
 
 ## Подпись
 
