@@ -70,6 +70,7 @@ export default defineConfig({
           text: 'Провайдерам',
           items: [
             { text: 'Настройка Remnawave', link: '/provider/' },
+            { text: 'Конфигуратор подписки', link: '/provider/configurator' },
             { text: 'Запрос подписки и HWID', link: '/provider/subscription' },
             { text: 'Заголовки ответа', link: '/provider/headers' },
             { text: 'Ссылки серверов', link: '/provider/links' },
