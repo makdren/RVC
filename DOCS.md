@@ -12,7 +12,6 @@
 | Изменения | https://rvc.rowny.shop/changelog |
 | Частые вопросы | https://rvc.rowny.shop/guide/faq |
 | Настройка Remnawave | https://rvc.rowny.shop/provider/ |
-| Конфигуратор подписки | https://rvc.rowny.shop/provider/configurator |
 | Запрос подписки и HWID | https://rvc.rowny.shop/provider/subscription |
 | Заголовки ответа | https://rvc.rowny.shop/provider/headers |
 | Ссылки серверов | https://rvc.rowny.shop/provider/links |
