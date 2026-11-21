@@ -17,7 +17,7 @@
   <a href="https://github.com/makdren/RVC/releases/latest"><img alt="Последняя версия" src="https://img.shields.io/github/v/release/makdren/RVC?style=flat-square&label=%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D1%8F&color=5B57F0"></a>
   <img alt="Android 8.0+" src="https://img.shields.io/badge/Android-8.0%2B-0FA968?style=flat-square&logo=android&logoColor=white">
   <img alt="Windows 10/11" src="https://img.shields.io/badge/Windows-10%20%7C%2011-0078D4?style=flat-square">
-  <img alt="Xray-core 26.10.21" src="https://img.shields.io/badge/Xray--core-26.10.21-24292f?style=flat-square">
+  <img alt="Xray-core 26.11.9" src="https://img.shields.io/badge/Xray--core-26.11.9-24292f?style=flat-square">
   <img alt="GPL-3.0" src="https://img.shields.io/badge/%D0%BB%D0%B8%D1%86%D0%B5%D0%BD%D0%B7%D0%B8%D1%8F-GPL--3.0-24292f?style=flat-square">
 </p>
 
