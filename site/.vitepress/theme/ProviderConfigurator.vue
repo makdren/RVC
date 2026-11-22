@@ -118,7 +118,15 @@ function downloadHeaders() {
   status.value = 'Файл подготовлен'
 }
 const connected = ref(false)
-const location = ref('Автовыбор')
+const locations = [
+  { name: 'Германия', flag: '🇩🇪', ping: 22 },
+  { name: 'Нидерланды', flag: '🇳🇱', ping: 17 },
+  { name: 'Финляндия', flag: '🇫🇮', ping: 14 },
+  { name: 'Латвия', flag: '🇱🇻', ping: 8 },
+]
+const location = ref('Латвия')
+const selected = computed(() => locations.find(item => item.name === location.value)!)
+const customCard = computed(() => ['profile-title', 'profile-description', 'profile-web-page-url', 'support-url', 'announce', 'banner-text'].some(key => values[key]?.trim()) || !!logo.value)
 </script>
 
 <template>
@@ -145,18 +153,22 @@ const location = ref('Автовыбор')
       <section class="config-panel preview" aria-label="Предпросмотр карточки">
         <h2>Демо главного экрана</h2>
         <div class="demo-phone" :class="{ connected }">
-          <div class="demo-head"><strong>rvc</strong><span>Предпросмотр</span></div>
-          <button type="button" class="demo-power" :aria-pressed="connected" aria-label="Переключить подключение в демо" @click="connected = !connected">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 2v9m-5.7-6a8 8 0 1 0 11.4 0"/></svg>
-          </button>
-          <div class="demo-state" role="status">{{ connected ? 'Подключено' : 'Не подключено' }}</div>
-          <select v-model="location" class="demo-location" aria-label="Локация в демо"><option>Автовыбор</option><option>Нидерланды</option><option>Эстония</option></select>
-        <div class="preview-card">
+          <div class="native-top">
+            <button type="button" class="native-power" :aria-pressed="connected" aria-label="Переключить подключение в демо" @click="connected = !connected"></button>
+            <span v-if="connected" class="native-status" role="status">Подключено</span>
+            <div class="native-picker">
+              <span v-if="location !== 'Латвия'" class="native-pill">{{ selected.flag }} {{ location }} · {{ selected.ping }}</span>
+              <select v-model="location" aria-label="Локация в демо"><option v-for="item in locations" :key="item.name">{{ item.name }}</option></select>
+            </div>
+          </div>
+          <div v-if="!customCard" class="native-card" role="img" aria-label="Карточка Demo VPN с расходом трафика и объявлением"></div>
+          <div v-else class="preview-card">
           <div class="provider-brand">
             <img v-if="showLogo && logo && !logoError" class="provider-initial" :src="logo" referrerpolicy="no-referrer" alt="" @error="logoError = true">
             <span v-else class="provider-initial" aria-hidden="true">{{ (values['profile-title']?.trim() || 'М').slice(0, 1).toUpperCase() }}</span>
             <div>
               <strong>{{ values['profile-title']?.trim() || 'Мой VPN' }}</strong>
+              <small class="native-usage">23,50 ГБ из 100,00 ГБ<br>осталось 27 дней</small>
               <span v-if="values['profile-description']">{{ values['profile-description'] }}</span>
             </div>
           </div>
@@ -173,6 +185,11 @@ const location = ref('Автовыбор')
             {{ values['banner-text'] }}<small v-if="values['banner-button-text'] && values['banner-button-url']">{{ values['banner-button-text'] }}</small>
           </div>
         </div>
+          <div class="native-list" aria-label="Локации">
+            <button v-for="(item, i) in locations" type="button" :key="item.name" :aria-label="item.name" :aria-pressed="item.name === location" :style="{ top: (15.5 + 15.8 * i) + '%' }" @click="location = item.name">
+              <span v-if="location !== 'Латвия' && (item.name === location || i === 3)" class="native-row" :class="{ chosen: item.name === location }"><span>{{ item.flag }}　{{ item.name }}</span><span>• {{ item.ping }} {{ item.name === location ? '✓' : '' }}</span></span>
+            </button>
+          </div>
         </div>
       </section>
       <section class="config-panel export">
@@ -209,15 +226,26 @@ textarea { resize: vertical; }
 input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--vp-c-brand-1); outline-offset: 2px; }
 .field-error { color: var(--vp-c-danger-1); font-size: 12px; line-height: 1.45; }
 .config-panel h2 { margin: 0 0 12px; padding: 0; border: 0; font-size: 16px; line-height: 1.4; }
-.demo-phone { --vp-c-bg: #23223b; --vp-c-divider: #ffffff32; --vp-c-text-2: #cecae2; --vp-c-brand-1: #cdc1ff; --vp-c-brand-soft: #423961; padding: 18px 12px; border-radius: 22px; background: radial-gradient(ellipse at 25% 12%, #433373, transparent 68%), #131527; color: #faf8ff; }
-.demo-phone.connected { background: radial-gradient(ellipse at 25% 12%, #225d58, transparent 68%), #101c27; }
-.demo-head { display: flex; align-items: center; justify-content: space-between; }
-.demo-head strong { font-size: 23px; letter-spacing: -.07em; }
-.demo-head span { font-size: 12px; color: #d1cde0; }
-.demo-power { display: grid; place-items: center; width: 84px; height: 84px; margin: 18px auto 8px; border: 3px solid #ffffff42; border-radius: 50%; background: #ffffff0e; color: #faf8ff; }
-.connected .demo-power { color: #84ecd8; border-color: #84ecd8; }
-.demo-state { text-align: center; font-weight: 650; }
-.demo-location { display: block; width: auto; max-width: 100%; margin: 7px auto 16px; background: #292840; color: white; border-radius: 20px; }
+.demo-phone { container-type: inline-size; max-width: 360px; margin: auto; overflow: hidden; border-radius: 20px; background: #100e18; color: #f6f5fa; --vp-c-bg: #1e1c26; --vp-c-divider: #ffffff26; --vp-c-text-2: #bdbac6; --vp-c-brand-1: #c6baff; --vp-c-brand-soft: #343041; }
+.native-top, .native-card, .native-list { background-image: url('/images/android-home-dark-1.2.0.webp'); background-size: 100% auto; background-repeat: no-repeat; position: relative; }
+.native-top { aspect-ratio: 360 / 325; background-position: top; }
+.native-card { aspect-ratio: 360 / 146; background-position: center 49.694%; }
+.native-list { aspect-ratio: 360 / 329; background-position: bottom; }
+.native-power, .native-picker, .native-list button { position: absolute; }
+.native-power { inset: 29.5% 29% auto; height: 46%; border-radius: 50%; }
+.native-power[aria-pressed=true] { box-shadow: inset 0 0 0 2px #70dfbf; background: #48d49a22; }
+.native-status, .native-pill { color: #fff; background: #1e1a29; text-align: center; font: 600 3.7cqw/1.4 system-ui; }
+.native-status { position: absolute; inset: 78% 20% auto; padding: 1%; border-radius: 12px; }
+.native-picker { inset: 87% 23% 2%; display: grid; place-items: center; }
+.native-picker select { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.native-picker:focus-within { outline: 2px solid #b4a6ff; border-radius: 20px; }
+.native-pill { padding: 3px 9px; border-radius: 16px; }
+.native-list button { left: 4%; width: 92%; height: 15.6%; }
+.native-row { display: flex; align-items: center; justify-content: space-between; height: 100%; padding: 0 5%; background: #211e29; font-size: 3.7cqw; }
+.native-row.chosen { background: #302a40; }
+.native-list button:last-child { overflow: hidden; border-radius: 0 0 18px 18px; }
+.native-usage { display: block; color: #bdbac6; font-size: 11px; line-height: 1.3; }
+.demo-phone .preview-card { margin: 0 4%; background: linear-gradient(155deg,#29272e,#121117); }
 .preview-card { border: 1px solid var(--vp-c-divider); border-radius: 13px; padding: 12px; background: var(--vp-c-bg); }
 .provider-brand { display: flex; align-items: flex-start; gap: 10px; overflow-wrap: anywhere; }
 .provider-brand div { min-width: 0; }
