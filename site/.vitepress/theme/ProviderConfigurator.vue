@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, reactive, watch } from 'vue'
+import { computed, ref, reactive, watch, onBeforeUnmount, watchEffect } from 'vue'
 
 type Field = {
   key: string
@@ -119,14 +119,49 @@ function downloadHeaders() {
 }
 const connected = ref(false)
 const locations = [
-  { name: 'Германия', flag: '🇩🇪', ping: 22 },
-  { name: 'Нидерланды', flag: '🇳🇱', ping: 17 },
-  { name: 'Финляндия', flag: '🇫🇮', ping: 14 },
-  { name: 'Латвия', flag: '🇱🇻', ping: 8 },
+  { name: 'Германия', flag: 'de', ping: 22 },
+  { name: 'Нидерланды', flag: 'nl', ping: 17 },
+  { name: 'Финляндия', flag: 'fi', ping: 14 },
+  { name: 'Латвия', flag: 'lv', ping: 8 },
 ]
 const location = ref('Латвия')
 const selected = computed(() => locations.find(item => item.name === location.value)!)
-const customCard = computed(() => ['profile-title', 'profile-description', 'profile-web-page-url', 'support-url', 'announce', 'banner-text'].some(key => values[key]?.trim()) || !!logo.value)
+const headers = computed(() => configuration.value.headers)
+const connecting = ref(false)
+const refreshing = ref(false)
+const expanded = ref(false)
+const clipped = ref(false)
+const announcement = ref<HTMLElement>()
+let connectTimer: ReturnType<typeof setTimeout>
+let refreshTimer: ReturnType<typeof setTimeout>
+function toggleConnection() {
+  clearTimeout(connectTimer)
+  if (connected.value || connecting.value) {
+    connecting.value = connected.value = false
+    return
+  }
+  connecting.value = true
+  connectTimer = setTimeout(() => { connecting.value = false; connected.value = true }, 1100)
+}
+function refreshPreview() {
+  refreshing.value = true
+  clearTimeout(refreshTimer)
+  refreshTimer = setTimeout(() => { refreshing.value = false }, 900)
+}
+onBeforeUnmount(() => { clearTimeout(connectTimer); clearTimeout(refreshTimer) })
+watch(() => values.announce, () => { expanded.value = false })
+watchEffect(cleanup => {
+  const text = values.announce
+  const el = announcement.value
+  if (!text || !el || expanded.value) return
+  const observer = new ResizeObserver(() => { clipped.value = el.scrollHeight > el.clientHeight + 1 })
+  observer.observe(el)
+  cleanup(() => observer.disconnect())
+}, { flush: 'post' })
+const behavior = computed(() => groups.slice(2).flatMap(group => group.fields)
+  .filter(field => headers.value[field.key])
+  .map(field => ({ label: field.label, value: field.kind === 'flag'
+    ? (values[field.key] === '1' ? 'Включено' : 'Выключено') : headers.value[field.key] })))
 </script>
 
 <template>
@@ -154,44 +189,46 @@ const customCard = computed(() => ['profile-title', 'profile-description', 'prof
         <h2>Демо главного экрана</h2>
         <div class="demo-phone" :class="{ connected }">
           <div class="native-top">
-            <button type="button" class="native-power" :aria-pressed="connected" aria-label="Переключить подключение в демо" @click="connected = !connected"></button>
-            <span v-if="connected" class="native-status" role="status">Подключено</span>
+            <button type="button" class="native-power" :class="{ connecting }" :aria-pressed="connected || connecting" aria-label="Переключить подключение в демо" @click="toggleConnection">
+              <svg v-if="connecting" class="arc" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" /></svg>
+            </button>
+            <span v-if="connected || connecting" class="native-status" role="status">{{ connecting ? 'Подключение…' : 'Подключено' }}</span>
             <div class="native-picker">
-              <span v-if="location !== 'Латвия'" class="native-pill">{{ selected.flag }} {{ location }} · {{ selected.ping }}</span>
+              <span class="native-pill"><img :src="'/images/provider-flags/'+selected.flag+'.webp'" alt=""> {{ location }} · {{ selected.ping }}</span>
               <select v-model="location" aria-label="Локация в демо"><option v-for="item in locations" :key="item.name">{{ item.name }}</option></select>
             </div>
           </div>
-          <div v-if="!customCard" class="native-card" role="img" aria-label="Карточка Demo VPN с расходом трафика и объявлением"></div>
-          <div v-else class="preview-card">
-          <div class="provider-brand">
-            <img v-if="showLogo && logo && !logoError" class="provider-initial" :src="logo" referrerpolicy="no-referrer" alt="" @error="logoError = true">
-            <span v-else class="provider-initial" aria-hidden="true">{{ (values['profile-title']?.trim() || 'М').slice(0, 1).toUpperCase() }}</span>
-            <div>
-              <strong>{{ values['profile-title']?.trim() || 'Мой VPN' }}</strong>
-              <small class="native-usage">23,50 ГБ из 100,00 ГБ<br>осталось 27 дней</small>
-              <span v-if="values['profile-description']">{{ values['profile-description'] }}</span>
+          <div class="preview-card">
+            <div class="provider-brand">
+              <img v-if="showLogo && logo && !logoError" class="provider-initial" :src="logo" referrerpolicy="no-referrer" alt="" @error="logoError = true">
+              <span v-else class="provider-initial">{{ Array.from(values['profile-title']?.trim() || 'Demo VPN')[0].toUpperCase() }}</span>
+              <div class="summary"><strong>{{ values['profile-title']?.trim() || 'Demo VPN' }}</strong><small class="native-usage">23,50 ГБ из 100,00 ГБ<br>осталось 27 дней</small><span>{{ values['profile-description'] }}</span></div>
+              <a v-if="headers['profile-web-page-url']" class="action" aria-label="Сайт" :href="headers['profile-web-page-url']" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg></a>
+              <a v-if="headers['support-url']" class="action" aria-label="Поддержка" :href="headers['support-url']" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path v-if="/t\.me|^tg:/.test(headers['support-url'])" d="m3 4 19 8-19 8 3-7 10-1-10-1z"/><path v-else d="M4 14v-2a8 8 0 0 1 16 0v6l-3 2h-4M4 12h3v6H4zm13 0h3v6h-3z"/></svg></a>
+              <button v-if="!values.announce" class="action" :class="{ refreshing }" aria-label="Обновить подписку в демо" @click="refreshPreview">↻</button>
             </div>
+            <button v-if="logo && !showLogo" class="logo-preview" @click="showLogo = true">Показать логотип</button>
+            <span v-if="logoError" class="field-error">Не удалось загрузить логотип.</span>
+            <div v-if="values.announce" class="announce-row">
+              <div class="notice"><span aria-hidden="true">◀</span><div>
+                <button class="notice-text" :aria-expanded="expanded" @click="expanded = !expanded"><span ref="announcement" :class="{ clamp: !expanded }">{{ values.announce }}</span></button>
+                <a v-if="headers['announce-url'] && (expanded || !clipped)" :href="headers['announce-url']" target="_blank" rel="noopener noreferrer">Подробнее</a></div>
+                <button v-if="clipped || expanded" :aria-label="expanded ? 'Свернуть' : 'Показать полностью'" @click="expanded = !expanded">{{ expanded ? '⌃' : '⌄' }}</button></div>
+              <button class="action" :class="{ refreshing }" aria-label="Обновить подписку в демо" @click="refreshPreview">↻</button>
+            </div>
+            <a v-if="!values['banner-text']?.trim() && headers['banner-button-url']" class="banner-action" :href="headers['banner-button-url']" target="_blank" rel="noopener noreferrer">{{ values['banner-button-text'] || 'Подробнее' }}</a>
           </div>
-          <button v-if="logo && !showLogo" class="logo-preview" type="button" @click="showLogo = true">Показать логотип</button>
-          <span v-if="logoError" class="field-error">Не удалось загрузить логотип.</span>
-          <div v-if="values['profile-web-page-url'] || values['support-url']" class="preview-links">
-            <span v-if="values['profile-web-page-url']">Сайт</span>
-            <span v-if="values['support-url']">Поддержка</span>
+          <div v-if="values['banner-text']?.trim()" class="preview-card banner" :style="{ '--banner': headers['banner-bg-color'] }"><span>{{ values['banner-text'] }}</span>
+            <a v-if="headers['banner-button-url']" class="banner-action" :href="headers['banner-button-url']" target="_blank" rel="noopener noreferrer">{{ values['banner-button-text'] || 'Подробнее' }}</a>
           </div>
-          <div v-if="values.announce" class="preview-note">
-            {{ values.announce }}<small v-if="values['announce-url']">Подробнее</small>
-          </div>
-          <div v-if="values['banner-text']" class="preview-note banner-preview" :style="{ '--banner-color': configuration.headers['banner-bg-color'] }">
-            {{ values['banner-text'] }}<small v-if="values['banner-button-text'] && values['banner-button-url']">{{ values['banner-button-text'] }}</small>
-          </div>
-        </div>
           <div class="native-list" aria-label="Локации">
             <button v-for="(item, i) in locations" type="button" :key="item.name" :aria-label="item.name" :aria-pressed="item.name === location" :style="{ top: (15.5 + 15.8 * i) + '%' }" @click="location = item.name">
-              <span v-if="location !== 'Латвия' && (item.name === location || i === 3)" class="native-row" :class="{ chosen: item.name === location }"><span>{{ item.flag }}　{{ item.name }}</span><span>• {{ item.ping }} {{ item.name === location ? '✓' : '' }}</span></span>
+              <span class="native-row" :class="{ chosen: item.name === location }"><span class="row-name"><img :src="'/images/provider-flags/'+item.flag+'.webp'" alt="">{{ item.name }}</span><span>• {{ item.ping }} {{ item.name === location ? '✓' : '' }}</span></span>
             </button>
           </div>
         </div>
       </section>
+      <section v-if="behavior.length" class="config-panel behavior"><h2>Параметры подписки</h2><dl><template v-for="item in behavior" :key="item.label"><dt>{{ item.label }}</dt><dd>{{ item.value }}</dd></template></dl></section>
       <section class="config-panel export">
         <div class="export-heading">
           <h2>Заголовки</h2>
@@ -268,4 +305,24 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-
   .provider-config { grid-template-columns: minmax(0, 1fr); }
   .config-results { position: static; }
 }
+.provider-brand {align-items:center}
+.action svg {width:55%;height:55%;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round}
+.summary {flex:1;min-width:0}.summary strong,.summary span {display:block;white-space:nowrap!important;text-overflow:ellipsis;overflow:hidden}
+.demo-phone .preview-card {border-radius:20px;padding:12px}
+.native-pill,.row-name,.announce-row,.notice {display:flex;align-items:center;gap:8px}
+.native-pill img,.row-name img {border-radius:50%;object-fit:cover;width:6cqw;height:6cqw}
+.row-name img {width:8.5cqw;height:8.5cqw}.native-row {padding:0 3.5%;border-bottom:1px solid #ffffff09}
+.native-pill {justify-content:center;min-width:66%}
+.action {display:grid;place-items:center;background:#333042;color:#c6baff!important;text-decoration:none!important;border-radius:50%;width:9cqw;height:9cqw;flex:none}
+.announce-row {margin-top:10px}.notice {align-items:flex-start;flex:1;min-width:0;background:#ffffff10;padding:9px;border-radius:12px;font-size:13px}.notice>div {min-width:0;flex:1}
+.notice-text {display:block;text-align:left;white-space:pre-wrap;overflow-wrap:anywhere}.clamp,.banner>span {display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.banner>span {-webkit-line-clamp:8;white-space:pre-wrap;overflow-wrap:anywhere}.demo-phone .banner {margin-top:10px;background:color-mix(in srgb,var(--banner,#302c38) 78%,#181420)}
+.banner-action {display:block;text-align:center;padding:8px;margin-top:10px;border-radius:12px;background:#776bd8;color:white!important;text-decoration:none!important;overflow-wrap:anywhere}
+.behavior dl {margin:0}.behavior dt {font-size:13px;color:var(--vp-c-text-2)}.behavior dd {margin:0 0 8px;overflow-wrap:anywhere}
+.native-power {transition:box-shadow 260ms cubic-bezier(.23,1,.32,1),background 500ms cubic-bezier(.23,1,.32,1),transform 150ms}.native-power:active {transform:scale(.95)}
+.native-power.connecting {box-shadow:none;background:transparent}.native-power[aria-pressed=true]:not(.connecting) {box-shadow:inset 0 0 0 3px #70dfbf,0 0 25px #70dfbf55}
+.arc {position:absolute;inset:0;width:100%;height:100%;animation:spin 1100ms linear infinite}.arc circle {fill:none;stroke:#b4a6ff;stroke-width:2;stroke-linecap:round;animation:sweep 900ms cubic-bezier(.77,0,.175,1) infinite alternate}
+@keyframes spin {to {transform:rotate(360deg)}}@keyframes sweep {from {stroke-dasharray:54 277}to {stroke-dasharray:115 277}}
+.refreshing {animation:spin 900ms linear}.native-row {transition:background 260ms cubic-bezier(.23,1,.32,1)}
+@media(prefers-reduced-motion:reduce){.demo-phone *, .demo-phone *::before {animation:none!important;transition:none!important}.arc circle {stroke-dasharray:90 277}}
 </style>
