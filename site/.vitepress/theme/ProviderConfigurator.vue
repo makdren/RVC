@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, reactive, watch, onBeforeUnmount, watchEffect } from 'vue'
+import { computed, ref, reactive, watch, onBeforeUnmount, watchEffect, nextTick } from 'vue'
 
 type Field = {
   key: string
@@ -158,6 +158,18 @@ watchEffect(cleanup => {
   observer.observe(el)
   cleanup(() => observer.disconnect())
 }, { flush: 'post' })
+async function toggleNotice() {
+  const panel = announcement.value?.closest<HTMLElement>('.notice')
+  if (!panel || (!clipped.value && !expanded.value)) return
+  const before = panel.getBoundingClientRect().height
+  expanded.value = !expanded.value
+  await nextTick()
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+  const after = panel.getBoundingClientRect().height
+  panel.animate([{ height: before + 'px' }, { height: after + 'px' }], {
+    duration: 260, easing: 'cubic-bezier(.23,1,.32,1)',
+  })
+}
 const behavior = computed(() => groups.slice(2).flatMap(group => group.fields)
   .filter(field => headers.value[field.key])
   .map(field => ({ label: field.label, value: field.kind === 'flag'
@@ -211,9 +223,9 @@ const behavior = computed(() => groups.slice(2).flatMap(group => group.fields)
             <span v-if="logoError" class="field-error">Не удалось загрузить логотип.</span>
             <div v-if="values.announce" class="announce-row">
               <div class="notice"><span aria-hidden="true">◀</span><div>
-                <button class="notice-text" :aria-expanded="expanded" @click="expanded = !expanded"><span ref="announcement" :class="{ clamp: !expanded }">{{ values.announce }}</span></button>
+                <button class="notice-text" :aria-expanded="expanded" @click="toggleNotice"><span ref="announcement" :class="{ clamp: !expanded }">{{ values.announce }}</span></button>
                 <a v-if="headers['announce-url'] && (expanded || !clipped)" :href="headers['announce-url']" target="_blank" rel="noopener noreferrer">Подробнее</a></div>
-                <button v-if="clipped || expanded" :aria-label="expanded ? 'Свернуть' : 'Показать полностью'" @click="expanded = !expanded">{{ expanded ? '⌃' : '⌄' }}</button></div>
+                <button v-if="clipped || expanded" :aria-label="expanded ? 'Свернуть' : 'Показать полностью'" @click="toggleNotice">{{ expanded ? '⌃' : '⌄' }}</button></div>
               <button class="action" :class="{ refreshing }" aria-label="Обновить подписку в демо" @click="refreshPreview">↻</button>
             </div>
             <a v-if="!values['banner-text']?.trim() && headers['banner-button-url']" class="banner-action" :href="headers['banner-button-url']" target="_blank" rel="noopener noreferrer">{{ values['banner-button-text'] || 'Подробнее' }}</a>
@@ -314,7 +326,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-
 .row-name img {width:8.5cqw;height:8.5cqw}.native-row {padding:0 3.5%;border-bottom:1px solid #ffffff09}
 .native-pill {justify-content:center;min-width:66%}
 .action {display:grid;place-items:center;background:#333042;color:#c6baff!important;text-decoration:none!important;border-radius:50%;width:9cqw;height:9cqw;flex:none}
-.announce-row {margin-top:10px}.notice {align-items:flex-start;flex:1;min-width:0;background:#ffffff10;padding:9px;border-radius:12px;font-size:13px}.notice>div {min-width:0;flex:1}
+.announce-row {margin-top:10px}.notice {align-items:flex-start;flex:1;min-width:0;background:#ffffff10;padding:9px;border-radius:12px;font-size:13px}.notice {overflow:hidden;box-sizing:border-box}.notice>div {min-width:0;flex:1}
 .notice-text {display:block;text-align:left;white-space:pre-wrap;overflow-wrap:anywhere}.clamp,.banner>span {display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .banner>span {-webkit-line-clamp:8;white-space:pre-wrap;overflow-wrap:anywhere}.demo-phone .banner {margin-top:10px;background:color-mix(in srgb,var(--banner,#302c38) 78%,#181420)}
 .banner-action {display:block;text-align:center;padding:8px;margin-top:10px;border-radius:12px;background:#776bd8;color:white!important;text-decoration:none!important;overflow-wrap:anywhere}
