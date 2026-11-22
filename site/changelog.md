@@ -6,7 +6,14 @@ outline: [2, 2]
 
 Все версии и файлы — в [релизах на GitHub](https://github.com/makdren/RVC/releases). Приложение обновляется само: о новой версии сообщит баннер на главном экране.
 
-## 1.2.2 <Badge type="tip" text="последняя" /> {#v1-2-2}
+## 1.2.3 <Badge type="tip" text="последняя" /> {#v1-2-3}
+
+<small>22 ноября 2026 · [релиз Android и Android TV](https://github.com/makdren/RVC/releases/tag/v1.2.3)</small>
+
+- Улучшена производительность.
+- Оптимизирована работа AmneziaWG.
+
+## 1.2.2 {#v1-2-2}
 
 <small>21 ноября 2026 · [релиз Android и Android TV](https://github.com/makdren/RVC/releases/tag/v1.2.2)</small>
 
