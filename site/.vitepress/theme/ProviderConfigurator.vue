@@ -333,7 +333,8 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-
 }
 .provider-brand {align-items:center}
 .action svg {width:55%;height:55%;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round}
-.summary {flex:1;min-width:0}.summary strong,.summary span {display:block;white-space:nowrap!important;text-overflow:ellipsis;overflow:hidden}
+.summary {flex:1;min-width:0}.summary strong {display:block;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}
+.provider-brand .summary span {display:block;white-space:pre-wrap;overflow-wrap:anywhere}
 .demo-phone .preview-card {border-radius:20px;padding:12px}
 .native-pill,.row-name,.announce-row,.notice {display:flex;align-items:center;gap:8px}
 .native-pill img,.row-name img {border-radius:50%;object-fit:cover;width:6cqw;height:6cqw}
