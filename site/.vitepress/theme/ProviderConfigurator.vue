@@ -158,16 +158,29 @@ watchEffect(cleanup => {
   observer.observe(el)
   cleanup(() => observer.disconnect())
 }, { flush: 'post' })
+// Unit-mass critically damped spring used by RvcMotion.ui() and press().
+function springEasing(stiffness: number, seconds: number) {
+  const frequency = Math.sqrt(stiffness)
+  const samples = Array.from({ length: 41 }, (_, index) => {
+    const t = seconds * index / 40
+    return index === 40 ? 1 : +(1 - (1 + frequency * t) * Math.exp(-frequency * t)).toFixed(5)
+  })
+  return 'linear(' + samples.join(',') + ')'
+}
+const pressEase = springEasing(1400, 0.24)
+const sizeEase = springEasing(380, 0.45)
+let noticeAnimation: Animation | undefined
 async function toggleNotice() {
   const panel = announcement.value?.closest<HTMLElement>('.notice')
   if (!panel || (!clipped.value && !expanded.value)) return
   const before = panel.getBoundingClientRect().height
+  noticeAnimation?.cancel()
   expanded.value = !expanded.value
   await nextTick()
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
   const after = panel.getBoundingClientRect().height
-  panel.animate([{ height: before + 'px' }, { height: after + 'px' }], {
-    duration: 260, easing: 'cubic-bezier(.23,1,.32,1)',
+  noticeAnimation = panel.animate([{ height: before + 'px' }, { height: after + 'px' }], {
+    duration: 450, easing: CSS.supports('animation-timing-function', sizeEase) ? sizeEase : 'ease-out',
   })
 }
 const behavior = computed(() => groups.slice(2).flatMap(group => group.fields)
@@ -199,12 +212,13 @@ const behavior = computed(() => groups.slice(2).flatMap(group => group.fields)
     <div class="config-results">
       <section class="config-panel preview" aria-label="Предпросмотр карточки">
         <h2>Демо главного экрана</h2>
-        <div class="demo-phone" :class="{ connected }">
+        <div class="demo-phone" :class="{ connected }" :style="{ '--press-ease': pressEase }">
           <div class="native-top">
             <button type="button" class="native-power" :class="{ connecting }" :aria-pressed="connected || connecting" aria-label="Переключить подключение в демо" @click="toggleConnection">
+              <svg class="power-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13 3h-2v10h2V3zm4.83 2.17-1.42 1.42A7 7 0 1 1 7.59 6.6L6.17 5.17a9 9 0 1 0 11.66 0z"/></svg>
               <svg v-if="connecting" class="arc" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" /></svg>
             </button>
-            <span v-if="connected || connecting" class="native-status" role="status">{{ connecting ? 'Подключение…' : 'Подключено' }}</span>
+            <span class="native-status" role="status">{{ connecting ? 'Подключение…' : connected ? 'Подключено' : 'Не подключено' }}</span>
             <div class="native-picker">
               <span class="native-pill"><img :src="'/images/provider-flags/'+selected.flag+'.webp'" alt=""> {{ location }} · {{ selected.ping }}</span>
               <select v-model="location" aria-label="Локация в демо"><option v-for="item in locations" :key="item.name">{{ item.name }}</option></select>
@@ -217,7 +231,7 @@ const behavior = computed(() => groups.slice(2).flatMap(group => group.fields)
               <div class="summary"><strong>{{ values['profile-title']?.trim() || 'Demo VPN' }}</strong><small class="native-usage">23,50 ГБ из 100,00 ГБ<br>осталось 27 дней</small><span>{{ values['profile-description'] }}</span></div>
               <a v-if="headers['profile-web-page-url']" class="action" aria-label="Сайт" :href="headers['profile-web-page-url']" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg></a>
               <a v-if="headers['support-url']" class="action" aria-label="Поддержка" :href="headers['support-url']" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path v-if="/t\.me|^tg:/.test(headers['support-url'])" d="m3 4 19 8-19 8 3-7 10-1-10-1z"/><path v-else d="M4 14v-2a8 8 0 0 1 16 0v6l-3 2h-4M4 12h3v6H4zm13 0h3v6h-3z"/></svg></a>
-              <button v-if="!values.announce" class="action" :class="{ refreshing }" aria-label="Обновить подписку в демо" @click="refreshPreview">↻</button>
+              <button v-if="!values.announce" class="action" :disabled="refreshing" :aria-label="refreshing ? 'Обновление подписки' : 'Обновить подписку в демо'" @click="refreshPreview"><svg v-if="refreshing" class="refresh-progress" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg><span class="refresh-arrow" :class="{ busy: refreshing }">↻</span></button>
             </div>
             <button v-if="logo && !showLogo" class="logo-preview" @click="showLogo = true">Показать логотип</button>
             <span v-if="logoError" class="field-error">Не удалось загрузить логотип.</span>
@@ -226,7 +240,7 @@ const behavior = computed(() => groups.slice(2).flatMap(group => group.fields)
                 <button class="notice-text" :aria-expanded="expanded" @click="toggleNotice"><span ref="announcement" :class="{ clamp: !expanded }">{{ values.announce }}</span></button>
                 <a v-if="headers['announce-url'] && (expanded || !clipped)" :href="headers['announce-url']" target="_blank" rel="noopener noreferrer">Подробнее</a></div>
                 <button v-if="clipped || expanded" :aria-label="expanded ? 'Свернуть' : 'Показать полностью'" @click="toggleNotice">{{ expanded ? '⌃' : '⌄' }}</button></div>
-              <button class="action" :class="{ refreshing }" aria-label="Обновить подписку в демо" @click="refreshPreview">↻</button>
+              <button class="action" :disabled="refreshing" :aria-label="refreshing ? 'Обновление подписки' : 'Обновить подписку в демо'" @click="refreshPreview"><svg v-if="refreshing" class="refresh-progress" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg><span class="refresh-arrow" :class="{ busy: refreshing }">↻</span></button>
             </div>
             <a v-if="!values['banner-text']?.trim() && headers['banner-button-url']" class="banner-action" :href="headers['banner-button-url']" target="_blank" rel="noopener noreferrer">{{ values['banner-button-text'] || 'Подробнее' }}</a>
           </div>
@@ -331,10 +345,23 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-
 .banner>span {-webkit-line-clamp:8;white-space:pre-wrap;overflow-wrap:anywhere}.demo-phone .banner {margin-top:10px;background:color-mix(in srgb,var(--banner,#302c38) 78%,#181420)}
 .banner-action {display:block;text-align:center;padding:8px;margin-top:10px;border-radius:12px;background:#776bd8;color:white!important;text-decoration:none!important;overflow-wrap:anywhere}
 .behavior dl {margin:0}.behavior dt {font-size:13px;color:var(--vp-c-text-2)}.behavior dd {margin:0 0 8px;overflow-wrap:anywhere}
-.native-power {transition:box-shadow 260ms cubic-bezier(.23,1,.32,1),background 500ms cubic-bezier(.23,1,.32,1),transform 150ms}.native-power:active {transform:scale(.95)}
-.native-power.connecting {box-shadow:none;background:transparent}.native-power[aria-pressed=true]:not(.connecting) {box-shadow:inset 0 0 0 3px #70dfbf,0 0 25px #70dfbf55}
-.arc {position:absolute;inset:0;width:100%;height:100%;animation:spin 1100ms linear infinite}.arc circle {fill:none;stroke:#b4a6ff;stroke-width:2;stroke-linecap:round;animation:sweep 900ms cubic-bezier(.77,0,.175,1) infinite alternate}
+.demo-phone {position:relative;isolation:isolate;background:#101018}
+.demo-phone::before,.demo-phone::after {content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(circle closest-side at 22% 21%,#6366f14d,transparent),radial-gradient(circle closest-side at 87% 42%,#a855f74d,transparent),radial-gradient(circle closest-side at 58% 77%,#2563eb4d,transparent);transition:opacity 900ms cubic-bezier(.77,0,.175,1),transform 1400ms cubic-bezier(.77,0,.175,1)}
+.demo-phone::after {opacity:0;transform:translate(-8%,5%);background:radial-gradient(circle at 45% 17%,#10b98180,transparent 40%),radial-gradient(circle at 72% 50%,#0ea5e980,transparent 40%),radial-gradient(circle at 36% 82%,#22c55e80,transparent 38%)}
+.demo-phone.connected::before {opacity:0;transform:translate(8%,-5%)}.demo-phone.connected::after {opacity:1;transform:none}
+.native-top {background:none}.native-top::before {content:"";position:absolute;inset:0;background:url('/images/android-home-dark-1.2.0.webp') top / 100% auto no-repeat;mask-image:linear-gradient(black 22%,transparent 29%)}
+.native-status {background:none;color:#bcbac4}
+.native-power,.native-power[aria-pressed=true] {display:grid;place-items:center;background:linear-gradient(140deg,#302d3b,#191820);color:#f5f5f7;border:1px solid #ffffff26;box-shadow:0 4px 14px #0003;transition:color 260ms cubic-bezier(.23,1,.32,1),transform 240ms var(--press-ease,ease-out)}
+.native-power:active {transform:scale(.95)}
+.native-power::before,.native-power::after {content:"";position:absolute;pointer-events:none;border-radius:50%}
+.native-power::before {inset:-15%;z-index:-1;background:radial-gradient(circle,#34d39959,transparent 71%);opacity:0;transition:opacity 500ms cubic-bezier(.23,1,.32,1)}
+.native-power::after {inset:5.5%;border:2px solid #f5f5f72e;transition:border-color 260ms cubic-bezier(.23,1,.32,1)}
+.connected .native-power {color:#34d399}.connected .native-power::before {opacity:1}.connected .native-power::after {border:3px solid #34d399}.native-power.connecting::after {border-color:transparent}
+.power-icon {width:32%;height:32%}
+.arc {position:absolute;inset:0;width:100%;height:100%;animation:spin 1100ms linear infinite}.arc circle {fill:none;stroke:#7c7cff;stroke-width:1.65;stroke-linecap:round;animation:sweep 900ms cubic-bezier(.77,0,.175,1) infinite alternate}
+.refresh-progress {animation:spin 1333ms linear infinite}.refresh-progress circle {stroke:#bcb5ff;stroke-linecap:round;animation:refresh-sweep 1333ms ease-in-out infinite}
+.refresh-arrow.busy {display:none}@keyframes refresh-sweep {0%,100% {stroke-dasharray:3 57}50% {stroke-dasharray:42 57}}
 @keyframes spin {to {transform:rotate(360deg)}}@keyframes sweep {from {stroke-dasharray:54 277}to {stroke-dasharray:115 277}}
-.refreshing {animation:spin 900ms linear}.native-row {transition:background 260ms cubic-bezier(.23,1,.32,1)}
-@media(prefers-reduced-motion:reduce){.demo-phone *, .demo-phone *::before {animation:none!important;transition:none!important}.arc circle {stroke-dasharray:90 277}}
+.native-row {transition:background 260ms cubic-bezier(.23,1,.32,1)}
+@media(prefers-reduced-motion:reduce){.demo-phone *, .demo-phone *::before {animation:none!important;transition:none!important}.arc {display:none}.native-power.connecting::after {border-color:#7c7cff}.refresh-progress {display:none}.refresh-arrow.busy {display:inline}}
 </style>
