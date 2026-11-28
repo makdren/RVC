@@ -35,6 +35,7 @@ HWID и прочие заголовки устройства уходят **то
 | Ссылки открытым текстом, по одной на строку | `vless://…`, `hy2://…`, `awg://…` |
 | JSON-массив полных конфигураций Xray (Remnawave XRAY_JSON) | `[{"remarks":"🇩🇪 DE","outbounds":[…]}]` |
 | Одиночная конфигурация Xray | `{"inbounds":[…],"outbounds":[…]}` |
+| JSON sing-box с совместимыми исходящими серверами (Android 1.2.4+) | `{"outbounds":[{"type":"vless","tag":"DE","server":"vpn.example.com",…}]}` |
 | `.conf` WireGuard / AmneziaWG целиком | `[Interface]` + `[Peer]` (можно в base64) |
 | JSON-контейнер AmneziaWG | `{"type":"amneziawg","servers":[{"name":"DE","config":"<base64url .conf>"}]}` |
 
@@ -45,6 +46,8 @@ HWID и прочие заголовки устройства уходят **то
 - «серверы» с адресом `0.0.0.0` или `127.0.0.1` — так панели передают сообщения («Подписка истекла», «Лимит устройств»). Они не попадают в список серверов и показываются как сообщения подписки.
 
 Схемы `ssr://`, `tuic://`, `hysteria://` (v1) пропускаются.
+
+Из JSON sing-box RVC импортирует совместимые серверы VLESS, VMess, Trojan, Shadowsocks и Hysteria2 для подключения через Xray. Для настройки маршрутизации, DNS и балансировщиков используйте [шаблон XRAY_JSON](/provider/#шаблон-xray-json).
 
 ## Параметры в адресе подписки
 

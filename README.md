@@ -22,8 +22,8 @@
 </p>
 
 <p align="center">
-  <img src="site/public/images/android-home-light-1.2.0.webp" width="216" alt="RVC 1.2.0, светлая тема">
-  <img src="site/public/images/android-home-dark-1.2.0.webp" width="216" alt="RVC 1.2.0, тёмная тема">
+  <img src="site/public/images/android-home-light-1.2.4.webp" width="216" alt="RVC 1.2.4, светлая тема">
+  <img src="site/public/images/android-home-dark-1.2.4.webp" width="216" alt="RVC 1.2.4, тёмная тема">
   <img src="docs/images/locations.jpg" width="216" alt="Локации и пинг">
 </p>
 
